@@ -3,8 +3,7 @@
   "name": "Extension Name",
   "version": "0.1",
   "description": "Some Description",
-  "permissions": [
-  ],
+  "permissions": ["storage", "background"],
   "background": {
     "scripts": ["static/js/background.js"]
   },
@@ -25,6 +24,13 @@
     "default_popup": "popup.html"
   },
   "options_ui": {
-    "page": "options.html"
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "wallet-runtime.connect-and-storage.local@example.com",
+      "strict_min_version": "48.0a1"
+    }
   }
 }

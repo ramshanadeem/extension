@@ -1,0 +1,62 @@
+/* .animationcard {
+    width: 27vw;
+    height: 12vw;
+    border: 3px solid rgba(141, 137, 137, 0.062) !important;
+    border-radius: 3vw !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+} */
+.btn1{
+   
+    border-radius: 50px;
+    font-weight:500px;
+    width: 221px;
+    color: white;
+    border-color: #037dd6;
+    background-color: #037dd6;
+    border: 1px solid #037dd6;
+    height: 44px;
+}
+
+.createBtn{
+    
+    border-radius: 50px;
+    font-weight:500px;
+    width: 151px;
+    color: white;
+    border-color: #037dd6;
+    background-color: #037dd6;
+    border: 1px solid #037dd6;
+    height: 44px;
+}
+/* .importCard{
+    border: 1px solid #d8d8d8;
+    justify-content: space-between;
+} */
+.box1{
+    display: flex;
+    flex-direction: row;
+}
+/* }
+.btn-card{
+    max-width: 221px;
+    height: 44px;
+    background-color: #037dd6;
+    border-radius: 100px;
+    transition: "box-shadow cubic-bezier(0.6, -0.28, 0.735, 0.045) 200ms";
+
+}
+
+.animationimg {
+    width: 19vw;
+    height: 12vw;
+}
+.Animcard1 {
+    width: 27vw;
+    height: 16vw;
+}
+.acard-head {
+    font-size: 2.5vw !important;
+    font-weight: bold !important;
+    /* color: #FF3008 !important; */

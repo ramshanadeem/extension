@@ -1,10 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import App from './views/Popup/App'
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
+// import reducers from './redux/reducers';
+import App from './views/Popup/App';
+import { store, persistor } from './Redux/store';
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
+  <PersistGate loading={null} persistor={persistor}>
     <App />
-  </React.StrictMode>,
+ </PersistGate>
+  </Provider>,
+
   document.getElementById('root')
 ); 
