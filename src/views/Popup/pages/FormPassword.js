@@ -1,4 +1,5 @@
-import * as React from 'react';
+// import * as React from 'react';
+import  React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,24 +16,45 @@ import { FormLabel } from '@mui/material';
 import FormGroup from '@mui/material/FormGroup';
 import Buttons from '../Components/Buttons';
 import './Cards.css'
+import { ethers } from 'ethers'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router'
+
 function Copyright(props) {
   return (
       <>
       </>
-    // <Typography variant="body2" color="text.secondary" align="center" {...props}>
-    //   {'Copyright © '}
-    //   <Link color="inherit" href="https://mui.com/">
-    //     Your Website
-    //   </Link>{' '}
-    //   {new Date().getFullYear()}
-    //   {'.'}
-    // </Typography>
+ 
   );
 }
 
 const theme = createTheme();
 
 export default function SignIn() {
+
+
+  const [password,setPassword]=useState('')
+  const dispatch = useDispatch()
+  const history=useHistory()
+  const createWallet=async()=>{
+      let randomSeed= ethers.Wallet.createRandom()
+      console.log("randomseed.menmonics",randomSeed.mnemonic)
+      console.log("randomSeed.address",randomSeed.address)
+      let hashedpassword= ethers.utils.hashMessage(password)
+      console.log("hashedpassword",hashedpassword)
+      let encryptPromise = await randomSeed.encrypt(hashedpassword);
+
+      console.log('ENCRYOPTED====', encryptPromise);
+  chrome.storage.sync.set({data:encryptPromise},()=>{
+    console.log("value is set to the data is "+encryptPromise)
+  });
+  chrome.storage.sync.set({hashedpassword},()=>{
+    console.log("the value is set the password is"+ hashedpassword)
+  });
+    
+      history.push('/seedPhrase');
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -43,8 +65,11 @@ export default function SignIn() {
     });
   };
 
+
+
+  
   return (
-    <Box sx={{ minWidth: 375,height: 378 }}>
+    <Box sx={{ minWidth: 375,height: "100vh" }}>
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -70,6 +95,7 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              // value={password} onChange={(e)=>setPassword(e.target.value)}
             />
                 <FormLabel style={{marginRight:"59%",color:"#5b5b5b",fontSize:"1rem"}}>Confirm Password</FormLabel>
             <TextField
@@ -77,7 +103,7 @@ export default function SignIn() {
               required
               fullWidth
               name="password"
-            
+              value={password} onChange={(e)=>setPassword(e.target.value)}
               type="password"
               id="password"
               autoComplete="current-password"
@@ -99,34 +125,10 @@ export default function SignIn() {
                 </span>
               </Grid>
               <div style={{marginRight:"60px",width:"20px",marginTop:"20px",marginBottom:"30px"}}>
-              <Buttons style={{width:"20px"}} btn="Create" className="createBtn"/>
+              <Buttons onClick={createWallet} style={{width:"20px"}} btn="Create" className="createBtn"/>
               </div>
     </FormGroup>
   
-
-{/*            
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign In
-
-            </Button> */}
-           
-            {/* <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid> */}
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />

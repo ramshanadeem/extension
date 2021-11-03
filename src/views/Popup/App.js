@@ -4,6 +4,7 @@ import {Switch, Route, BrowserRouter } from 'react-router-dom';
 import './App.css'
 import CreatePassword from './CreatePassword';
 import Dashboard from './Dashboard';
+import ConfirmPhrase from './pages/ConfirmPhrase';
 import FormPassword from './pages/FormPassword';
 import Recover from './Recover';
 import SeedPhrase from './SeedPhrase';
@@ -17,11 +18,12 @@ function App() {
        <BrowserRouter history={history}>
        <Switch>
          <Route path="/popup.html" component={Welcome}/>
-         <Route path="/createPassword" component={CreatePassword}/>
+         {/* <Route path="/createPassword" component={CreatePassword}/> */}
          <Route path="/seedPhrase" component={SeedPhrase}/>
          <Route path="/recover" component={Recover}/>
          <Route path="/dashboard" component={Dashboard}/>
          <Route path="/create" component={FormPassword}/>
+         <Route path="/confirmPhrase" component={ConfirmPhrase}/>
        </Switch>
        </BrowserRouter>
       </header>

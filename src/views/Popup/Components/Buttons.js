@@ -5,7 +5,7 @@ import '../pages/Cards.css'
 export default function ContainedButtons(props) {
   return (
     // <Stack direction="row" spacing={2}>
-      <button className={props.className} variant="contained">{props.btn}</button>
+      <button  onClick={props.onClick} className={props.className} variant="contained">{props.btn}</button>
      
     // </Stack>
   );

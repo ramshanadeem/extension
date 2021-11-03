@@ -1,0 +1,142 @@
+import { Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
+import { CREATE_WALLET } from "../../../Redux/ActionType";
+import { decrypt } from "../../../Utils/Utils";
+import Buttons from "../Components/Buttons";
+import Button from "@mui/material/Button";
+import "./Cards.css";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
+function ConfirmPhrase() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [mnemonics, setMnemonics] = useState("");
+  const [encryptedData, setEncryptedData] = useState("");
+  const [encryptedPassword, setEncryptedPassword] = useState("");
+  const [showResults, setShowResults] = useState([]);
+  const onc = (k) => setShowResults([...showResults, k]);
+  const [shuffle, setshuffle] = useState([]);
+  // const {data,hashedpassword} = useSelector(({WalletEncrypted}) => WalletEncrypted?.walletEncrypt)
+  // console.log("hashedpassword",data,hashedpassword)
+
+  useEffect(() => {
+    chrome.storage.sync.get(["data"], async ({ data }) => {
+      console.log("current data is", data);
+      setEncryptedData(data);
+
+      chrome.storage.sync.get(
+        ["hashedpassword"],
+        async ({ hashedpassword }) => {
+          console.log("current value is ", hashedpassword);
+          setEncryptedPassword(hashedpassword);
+
+          const { mnemonic } = await decrypt(data, hashedpassword);
+          console.log("mnemonic", mnemonic);
+          setMnemonics(mnemonic.phrase);
+        }
+      );
+    });
+
+    dispatch({
+      type: CREATE_WALLET,
+      payload: {
+        isLoggedIn: true,
+      },
+    });
+  }, []);
+  let Split = mnemonics.split(" ");
+  useEffect(() => {
+    let Split = mnemonics.split(" ");
+    // const fn=()=>{
+    console.log(Split);
+
+    let n = Split.length;
+
+    for (var i = n - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = Split[i];
+      Split[i] = Split[j];
+      Split[j] = tmp;
+    }
+    setshuffle(Split);
+  }, [mnemonics]);
+  const confirmPhrase=()=>{
+  setshuffle(Split.join(' '))
+ console.log(Split.join(' '))
+  console.log("sseeeet", shuffle)
+  console.log(showResults,"afterrrr")
+  if(showResults.join(' ') == mnemonics)
+  {
+    console.log("yesequal")
+  }
+  else{
+    console.log("notequal")
+  }
+  }
+  return (
+    <div style={{ height: 700, width: 400 }}>
+      <div>
+        <Typography
+          style={{
+            display: "flex",
+            marginTop: "10px",
+            textDecoration: "none",
+            marginLeft: "5%",
+          }}
+        >
+          <Link to="/seedPhrase">
+            <Button startIcon={<ArrowBackIcon />}>Back</Button>
+          </Link>
+        </Typography>
+      </div>
+      <Typography
+        component="h1"
+        variant="h4"
+        style={{
+          fontSize: "2.5rem",
+          marginBottom: "5%",
+          marginRight: "5%",
+          marginTop: "40px",
+        }}
+      >
+        Confirm your Secret Recovery Phrase
+      </Typography>
+      <Typography
+        style={{
+          marginBottom: "5%",
+          marginRight: "2%",
+          marginTop: "40px",
+          marginLeft: "2%",
+        }}
+      >
+        Please select each phrase in order to make sure it is correct.
+      </Typography>
+      <div className="phraseBox" style={{ marginTop: "40px" }}>
+        {showResults.map((k) => {
+          return <Button>{k}</Button>;
+        })}
+      </div>
+      {shuffle.map((i) => {
+        return (
+          <Button onClick={() => onc(i)}>
+            {i}
+
+            {/* { showResults ? i : null } */}
+          </Button>
+        );
+      })}
+
+      <Button></Button>
+
+      <div style={{ marginTop: "30px"}}>
+        <Buttons onClick={confirmPhrase} className="createBtn" btn="Confirm" />
+      </div>
+    </div>
+  );
+}
+
+export default ConfirmPhrase;

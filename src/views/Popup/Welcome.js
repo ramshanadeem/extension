@@ -6,22 +6,23 @@ import { useSelector } from 'react-redux';
 import Cards from './pages/Cards';
 import arrow from '../../Assets/arrow.svg'
 import plus from '../../Assets/plus.svg'
-// import Wallet from '../../Redux/Reducers/Wallet';
-
+import Wallet from '../../Redux/Reducers/Wallet';
+ import "./Welcome.css"
 function Welcome(heading,para) {
-    // const history = useHistory();
+    const history = useHistory();
     // const wallet = useSelector(({Wallet}) => Wallet?.wallet)
     // console.log(wallet,"wallet")
     // useEffect(() => {
     //     if(wallet?.isLoggedIn)
     //     {
     //         history.push("/dashboard")
+            
     //     }
        
     // }, []);
     return (
         <>
-    <div style={{marginBottom:"60px",fontSize:"1.5rem",marginTop:"30px"}}>New to MetaMask?</div>
+    <div className="welcomediv">New to MetaMask?</div>
 
         <div style={{ height: 300,paddingRight:"5px",paddingLeft:"5px",display:"flex",flexDirection:"column" }}>
 <Cards image={arrow} heading="No, I already have a Secret Recovery Phrase" para="Import your existing wallet using a Secret Recovery Phrase" btn="Import Wallet"/>

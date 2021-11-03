@@ -18,7 +18,20 @@
     border: 1px solid #037dd6;
     height: 44px;
 }
-
+.phraseBox{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-height: 161px;
+    max-width: 375px; 
+    border: 1px solid #cdcdcd;
+    border-radius: 6px;
+    margin: auto;
+    /* margin: auto;
+  
+    background-color: #fff; */
+   
+}
 .createBtn{
     
     border-radius: 50px;
@@ -29,6 +42,7 @@
     background-color: #037dd6;
     border: 1px solid #037dd6;
     height: 44px;
+
 }
 /* .importCard{
     border: 1px solid #d8d8d8;
