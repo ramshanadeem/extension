@@ -57,6 +57,44 @@
     margin-bottom: 5px;
 }
 
+.home__tabs {
+    border: none;
+    box-shadow: 0 3px 4px rgb(135 134 134 / 16%);
+}
+.tabs__list {
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 1px solid #d2d8dd;
+    background-color: #fff;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+ul{
+    list-style: none;
+}
+.home__tab--active {
+    color: #037dd6;
+}
+.home__tab {
+    font-size: 0.875rem;
+    font-family: Euclid, Roboto, Helvetica, Arial, sans-serif;
+    line-height: 140%;
+    font-style: normal;
+    font-weight: normal;
+    flex-grow: 1;
+    color: #6a737d;
+    font-weight: 500;
+}
+.assets{
+    border-style: none;
+    cursor: pointer;
+}
+.tab--active {
+    color: #000;
+    border-bottom: 2px solid #037dd6;
+}
 .account{
     font-size: 1rem;
     font-family: Euclid, Roboto, Helvetica, Arial, sans-serif;

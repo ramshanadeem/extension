@@ -157,6 +157,7 @@ const CreatedMask = () => {
         <button
           class="icon-button eth-overview__button"
           data-testid="eth-overview-send"
+          onClick={sendTransaction}
         >
           <div class="icon-button__circle">
             <svg
@@ -197,6 +198,19 @@ const CreatedMask = () => {
           </div>
           <span>Send</span>
         </button>
+      </div>
+      <div style={{ marginTop: "15%" }}>
+        <ul class="tabs__list home__tabs">
+          <li
+            class="tab home__tab tab--active home__tab--active"
+            data-testid="home__asset-tab"
+          >
+            <button className="asset">Assets</button>
+          </li>
+          <li class="tab home__tab" data-testid="home__activity-tab">
+            <button>Activity</button>
+          </li>
+        </ul>
       </div>
     </div>
   );
