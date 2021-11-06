@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { ethers } from 'ethers';
-import { decrypt } from '../../Utils/Utils';
-
-
+import React, { useEffect, useState } from "react";
+import { ethers } from "ethers";
+import { decrypt } from "../../Utils/Utils";
 
 // const Tx = require('ethereumjs-tx');
 
 // import { REMOVE_MNEMONIC } from '../../redux/actionTypes';
 
 const Dashboard = () => {
-  const [publicKey, setPublicKey] = useState('');
-  const [privateKey, setPrivateKey] = useState('');
-  const [address, setAddress] = useState('');
-  const [seedPhrase, setSeedPhrase] = useState('');
-  const [balance, setBalance] = useState('');
-  const [network, setNetwork] = useState('rinkeby');
-  const [encryptedData, setEncryptedData] = useState('');
-  const [encryptedPassword, setEncryptedPassword] = useState('');
+  const [publicKey, setPublicKey] = useState("");
+  const [privateKey, setPrivateKey] = useState("");
+  const [address, setAddress] = useState("");
+  const [seedPhrase, setSeedPhrase] = useState("");
+  const [balance, setBalance] = useState("");
+  const [network, setNetwork] = useState("rinkeby");
+  const [encryptedData, setEncryptedData] = useState("");
+  const [encryptedPassword, setEncryptedPassword] = useState("");
 
   // const { data, hashedPassword } = useSelector(
   //   ({ walletEncrypted }) => walletEncrypted?.walletEncrypted
@@ -46,27 +44,31 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    chrome.storage.sync.get(['data'], async ({ data }) => {
-      console.log('Value currently is ' + data);
+    (async () => {
+      let data = localStorage.getItem("data");
       setEncryptedData(data);
+      let hashedpassword = localStorage.getItem("hashedpassword");
+      console.log("current value is ", hashedpassword);
+      setEncryptedPassword(hashedpassword);
+      // chrome.storage.sync.get(['data'], async ({ data }) => {
+      //   console.log('Value currently is ' + data);
+      //   setEncryptedData(data);
 
-      chrome.storage.sync.get(
-        ['hashedpassword'],
-        async ({ hashedpassword }) => {
-          console.log('Value currently is '+ hashedpassword);
-          setEncryptedPassword(hashedpassword);
+      //   chrome.storage.sync.get(
+      //     ['hashedpassword'],
+      //     async ({ hashedpassword }) => {
+      //       console.log('Value currently is '+ hashedpassword);
+      //       setEncryptedPassword(hashedpassword);
 
-          const { publicKey, address, privateKey, mnemonic } = await decrypt(
-            data,
-            hashedpassword
-          );
-          setPublicKey(publicKey);
-          setAddress(address);
-          setPrivateKey(privateKey);
-          setSeedPhrase(mnemonic.phrase);
-        }
+      const { publicKey, address, privateKey, mnemonic } = await decrypt(
+        data,
+        hashedpassword
       );
-    });
+      setPublicKey(publicKey);
+      setAddress(address);
+      setPrivateKey(privateKey);
+      // setSeedPhrase(mnemonic.phrase);
+    })();
   }, []);
 
   let provider;
@@ -76,11 +78,11 @@ const Dashboard = () => {
       try {
         provider = ethers.getDefaultProvider(network);
         provider.getBlockWithTransactions();
-        console.log('PROVIDER', provider);
+        console.log("PROVIDER", provider);
         const balance = await provider.getBalance(address);
         setBalance(ethers.utils.formatEther(balance));
       } catch (error) {
-        console.log('ERR===', error);
+        console.log("ERR===", error);
       }
     })();
   }, [network, balance]);
@@ -102,8 +104,8 @@ const Dashboard = () => {
   const sendTransaction = async () => {
     try {
       let tx = {
-        to: '0xAf78D1E8358FB1E9239eccC338D356Fb46ff681E',
-        value: ethers.utils.parseEther('0.003'),
+        to: "0xAf78D1E8358FB1E9239eccC338D356Fb46ff681E",
+        value: ethers.utils.parseEther("0.003"),
       };
 
       const walletMneomnic = await decrypt(encryptedData, encryptedPassword);
@@ -111,12 +113,12 @@ const Dashboard = () => {
       await walletMneomnic.signTransaction(tx);
       let wallet = walletMneomnic.connect(provider);
       let tr = await wallet.sendTransaction(tx);
-      console.log('TRANS===========', tr);
+      console.log("TRANS===========", tr);
       setBalance(balance - 0.00005);
 
-      alert('Send finished!');
+      alert("Send finished!");
     } catch (error) {
-      console.log('ERROR=====', error);
+      console.log("ERROR=====", error);
     }
   };
 
@@ -125,15 +127,15 @@ const Dashboard = () => {
       <h3>Public Key: {publicKey}</h3>
       <h3>PRIVATE KEY: {privateKey}</h3>
       <h3>Address: {address}</h3>
-      <h3>SEED PHRASE: {seedPhrase}</h3>
-      <select onChange={e => setNetwork(e.target.value)}>
-        <option value='homestead'>Ethereum Mainnet</option>
-        <option value='rinkeby' selected>
+      {/* <h3>SEED PHRASE: {seedPhrase}</h3> */}
+      <select onChange={(e) => setNetwork(e.target.value)}>
+        <option value="homestead">Ethereum Mainnet</option>
+        <option value="rinkeby" selected>
           Rinkeby
         </option>
-        <option value='ropsten'>Ropsten</option>
-        <option value='kovan'>Kovan</option>
-        <option value='goerli'>Goerili</option>
+        <option value="ropsten">Ropsten</option>
+        <option value="kovan">Kovan</option>
+        <option value="goerli">Goerili</option>
       </select>
       <p>Your Balance: {balance} ETH</p>
 

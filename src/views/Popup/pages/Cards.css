@@ -7,6 +7,9 @@
     align-items: center !important;
     justify-content: center !important;
 } */
+.dialog{
+    position: absolute !important;
+}
 .btn1{
    
     border-radius: 50px;
@@ -32,6 +35,22 @@
     background-color: #fff; */
    
 }
+.activebtn:focus{
+    color: white;
+    border-color: #037dd6;
+    background-color: #037dd6;
+    border: 1px solid #037dd6;
+}
+
+
+.activebtn:focus:hover{
+    color: white;
+    border-color: #037dd6;
+    background-color: #037dd6;
+    border: 1px solid #037dd6;
+}
+
+
 .createBtn{
     
     border-radius: 50px;

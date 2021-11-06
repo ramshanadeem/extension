@@ -10,7 +10,12 @@ import Buttons from "../Components/Buttons";
 import Button from "@mui/material/Button";
 import "./Cards.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { display } from "@mui/system";
 function ConfirmPhrase() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -18,41 +23,76 @@ function ConfirmPhrase() {
   const [encryptedData, setEncryptedData] = useState("");
   const [encryptedPassword, setEncryptedPassword] = useState("");
   const [showResults, setShowResults] = useState([]);
-  const onc = (k) => setShowResults([...showResults, k]);
+
+  const onc = (k) => {
+    //includes check the array elements are present or not
+    // condition is that check if there is not showresult then setshowResult()
+    //else
+    // once result show then delete it on next click
+    if (!showResults.includes(k)) {
+      setShowResults([...showResults, k]);
+    } else {
+      let findIndex = showResults.findIndex((sr) => sr == k);
+      let removed = showResults.splice(findIndex, 1);
+      let res = showResults.filter((sr) => sr !== removed[0]);
+      console.log(removed, res);
+      setShowResults(res);
+    }
+  };
+
   const [shuffle, setshuffle] = useState([]);
+  const [open, setOpen] = useState(false);
+
   // const {data,hashedpassword} = useSelector(({WalletEncrypted}) => WalletEncrypted?.walletEncrypt)
   // console.log("hashedpassword",data,hashedpassword)
 
   useEffect(() => {
-    chrome.storage.sync.get(["data"], async ({ data }) => {
-      console.log("current data is", data);
+    (async () => {
+      let data = localStorage.getItem("data");
       setEncryptedData(data);
+      let hashedpassword = localStorage.getItem("hashedpassword");
+      console.log("current value is ", hashedpassword);
+      setEncryptedPassword(hashedpassword);
 
-      chrome.storage.sync.get(
-        ["hashedpassword"],
-        async ({ hashedpassword }) => {
-          console.log("current value is ", hashedpassword);
-          setEncryptedPassword(hashedpassword);
+      const { mnemonic } = await decrypt(data, hashedpassword);
+      console.log("mnemonic", mnemonic);
+      setMnemonics(mnemonic.phrase);
 
-          const { mnemonic } = await decrypt(data, hashedpassword);
-          console.log("mnemonic", mnemonic);
-          setMnemonics(mnemonic.phrase);
-        }
-      );
-    });
-
-    dispatch({
-      type: CREATE_WALLET,
-      payload: {
-        isLoggedIn: true,
-      },
-    });
+      dispatch({
+        type: CREATE_WALLET,
+        payload: {
+          isLoggedIn: true,
+        },
+      });
+    })();
   }, []);
+
+  // useEffect(() => {
+  //   localStorage.getItem(["data"], async ({ data }) => {
+  //     console.log("current data is", data);
+  //     setEncryptedData(data);
+
+  //     localStorage.getItem(["hashedpassword"], async ({ hashedpassword }) => {
+  //       console.log("current value is ", hashedpassword);
+  //       setEncryptedPassword(hashedpassword);
+
+  //       const { mnemonic } = await decrypt(data, hashedpassword);
+  //       console.log("mnemonic", mnemonic);
+  //       setMnemonics(mnemonic.phrase);
+  //     });
+  //   });
+
+  //   dispatch({
+  //     type: CREATE_WALLET,
+  //     payload: {
+  //       isLoggedIn: true,
+  //     },
+  //   });
+  // }, []);
   let Split = mnemonics.split(" ");
   useEffect(() => {
     let Split = mnemonics.split(" ");
     // const fn=()=>{
-    console.log(Split);
 
     let n = Split.length;
 
@@ -62,21 +102,29 @@ function ConfirmPhrase() {
       Split[i] = Split[j];
       Split[j] = tmp;
     }
+    console.log("SPLLIT========", Split);
     setshuffle(Split);
   }, [mnemonics]);
-  const confirmPhrase=()=>{
-  setshuffle(Split.join(' '))
- console.log(Split.join(' '))
-  console.log("sseeeet", shuffle)
-  console.log(showResults,"afterrrr")
-  if(showResults.join(' ') == mnemonics)
-  {
-    console.log("yesequal")
-  }
-  else{
-    console.log("notequal")
-  }
-  }
+
+  const handleClickOpen = () => {
+    let Split = mnemonics.split(" ");
+    // setshuffle(Split.join(" "));
+    console.log(Split.join(" "));
+    console.log("sseeeet", shuffle);
+    console.log(showResults, "afterrrr");
+    if (showResults.join(" ") == mnemonics) {
+      console.log("yesequal");
+      history.push("/createdMask");
+    } else {
+      console.log("notequal", shuffle);
+      setOpen(true);
+    }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setShowResults([" "]);
+  };
   return (
     <div style={{ height: 700, width: 400 }}>
       <div>
@@ -120,21 +168,49 @@ function ConfirmPhrase() {
           return <Button>{k}</Button>;
         })}
       </div>
-      {shuffle.map((i) => {
-        return (
-          <Button onClick={() => onc(i)}>
-            {i}
 
-            {/* { showResults ? i : null } */}
-          </Button>
-        );
-      })}
-
-      <Button></Button>
-
-      <div style={{ marginTop: "30px"}}>
-        <Buttons onClick={confirmPhrase} className="createBtn" btn="Confirm" />
+      <div>
+        {shuffle.map((value) => {
+          return (
+            <Button className="activebtn" onClick={() => onc(value)}>
+              {value}
+            </Button>
+          );
+        })}
       </div>
+
+      <div style={{ marginTop: "30px" }}>
+        {/* <Buttons onClick={confirmPhrase} className="createBtn" btn="Confirm" /> */}
+        {/* <Button variant="outlined" onClick={handleClickOpen}>
+          Slide in alert dialog
+        </Button> */}
+        <Button
+          // className="createBtn"
+          disabled={showResults.length != 12}
+          onClick={handleClickOpen}
+        >
+          Confirm
+        </Button>
+      </div>
+
+      <Dialog
+        className="dialog"
+        // style={{position:"absolute"}}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title"></DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Not Matched
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>ok</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
