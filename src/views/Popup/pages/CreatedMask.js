@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { makeStyles } from "@material-ui/core/styles";
 // const Tx = require('ethereumjs-tx');
-
+import { useHistory } from "react-router";
 import Web3 from "web3";
 import { EthereumIcon } from "../../../Assets";
 import { Typography } from "@mui/material";
@@ -33,7 +33,10 @@ const CreatedMask = () => {
   const [encryptedPassword, setEncryptedPassword] = useState("");
   const [customTokens, setCustomTokens] = useState([]);
   const [totalBalance, setTotalBalance] = useState(0);
-
+  const history = useHistory();
+  const importToken = () => {
+    history.push("/Importoken");
+  };
   useEffect(() => {
     (async () => {
       let data = localStorage.getItem("data");
@@ -259,7 +262,7 @@ const CreatedMask = () => {
 
       <div className="ImpToken">
         <p className="typo"> Don't see your token?</p>
-        <Button>Import token</Button>
+        <Button onClick={importToken}>Import token</Button>
         <p className="typo">
           Need help? Contact{" "}
           <Button style={{ fontVariant: "small-caps" }}>

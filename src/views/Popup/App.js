@@ -13,6 +13,7 @@ import SeedPhrase from "./SeedPhrase";
 import Welcome from "./Welcome";
 import Activity from "./pages/Activity";
 import Assets from "./pages/Assets";
+import ImportTokens from "./pages/ImportTokens";
 
 function App() {
   const history = createMemoryHistory();
@@ -33,6 +34,7 @@ function App() {
             <Route path="/notMatch" component={NotMatch} />
             <Route path="/Activity" component={Activity} />
             <Route path="/Assets" component={Assets} />
+            <Route path="/Importoken" component={ImportTokens} />
           </Switch>
         </BrowserRouter>
       </header>

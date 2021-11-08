@@ -1,0 +1,134 @@
+.typograph{
+    font-weight: 500 !important;
+    font-size: 2rem !important;
+    font-family: Euclid, Roboto, Helvetica, Arial, sans-serif;
+    line-height: 140%;
+    font-style: normal;
+    font-weight: normal;
+    color: #000;
+   margin-right: 170px !important;
+
+}
+.typograph1{
+
+    font-family: Euclid, Roboto, Helvetica, Arial, sans-serif;
+    line-height: 140%;
+    font-style: normal;
+    font-weight: normal;
+    color: #9b9b9b !important;
+   margin-right: 65% !important;
+   margin-top: 15px !important;
+}
+.Custom{
+ 
+    border-radius: 50px;
+    font-weight:500px;
+    font-size: 70%;
+    width: 90%;
+    color: white;
+    border-color: #037dd6;
+    background-color: #037dd6;
+    border: 1px solid #037dd6;
+    height: 44px;
+}
+.header{
+    background: #f2f3f4;
+    position: relative;
+    z-index: 12;
+    display: flex;
+    flex-flow: column nowrap;
+    width: 400px;
+    height: 70px;
+    flex: 0 0 auto;
+   color: #4d4d4d;
+}
+
+
+.dropdown{
+    margin-top: 15px;
+    border-radius: 100px;
+        border: 1px solid #878181;
+ background-color: transparent;
+ color: #878181;
+        padding: 8px 16px;
+        margin-left: 30px;
+        /* display: flex; */
+        /* align-items: center; */
+
+     
+        
+}
+.icon-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background:transparent;
+    text-align: center;
+    font-size: 0.75rem;
+    font-family: Euclid, Roboto, Helvetica, Arial, sans-serif;
+    line-height: 140%;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    cursor: pointer;
+    color: #037dd6;
+   border-color: transparent
+   
+}
+.eth-overview__button {
+    margin-right: 24px;
+}
+.icon-button__circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 36px;
+    width: 36px;
+    background: #037dd6;
+    border-radius: 18px;
+    margin-top: 6px;
+    margin-bottom: 5px;
+}
+
+.home__tabs {
+    border: none;
+    box-shadow: 0 3px 4px rgb(135 134 134 / 16%);
+}
+.tabs__list {
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 1px solid #d2d8dd;
+    background-color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.home__main-view .home__tab {
+    font-size: 0.875rem;
+    font-family: Euclid, Roboto, Helvetica, Arial, sans-serif;
+    line-height: 140%;
+    font-style: normal;
+    font-weight: normal;
+    flex-grow: 1;
+    color: #6a737d;
+    font-weight: 500;
+}
+
+.ImpToken
+{
+    font-size: 22px;
+    font-family:  Euclid, Roboto, Helvetica, Arial, sans-serif;
+    line-height: 140%;
+    font-style: normal;
+    font-weight: normal;
+    color: #6a737d;
+
+}
+ul{
+    list-style: none;
+}
+.home__tab--active {
+    color: #037dd6;
+    
+}

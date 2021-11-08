@@ -245,6 +245,14 @@ const Activity = () => {
         </ul>
         <p>{txHistory.length}</p>
       </div>
+      <div className="ImpToken">
+        <p className="typo">
+          Need help? Contact{" "}
+          <Button style={{ fontVariant: "small-caps" }}>
+            MetaMask Support
+          </Button>
+        </p>
+      </div>
     </div>
   );
 };
