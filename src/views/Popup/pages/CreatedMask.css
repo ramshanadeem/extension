@@ -66,16 +66,40 @@
     justify-content: flex-start;
     border-bottom: 1px solid #d2d8dd;
     background-color: #fff;
-    position: -webkit-sticky;
     position: sticky;
     top: 0;
     z-index: 1;
+}
+
+.home__main-view .home__tab {
+    font-size: 0.875rem;
+    font-family: Euclid, Roboto, Helvetica, Arial, sans-serif;
+    line-height: 140%;
+    font-style: normal;
+    font-weight: normal;
+    flex-grow: 1;
+    color: #6a737d;
+    font-weight: 500;
+}
+.typo{
+    font-size: small;
+}
+.ImpToken
+{
+    font-size: 22px;
+    font-family:  Euclid, Roboto, Helvetica, Arial, sans-serif;
+    line-height: 140%;
+    font-style: normal;
+    font-weight: normal;
+    color: #6a737d;
+
 }
 ul{
     list-style: none;
 }
 .home__tab--active {
     color: #037dd6;
+    
 }
 .home__tab {
     font-size: 0.875rem;
@@ -95,8 +119,11 @@ ul{
     color: #000;
     border-bottom: 2px solid #037dd6;
 }
+.link{
+    text-decoration: none;
+}
 .account{
-    font-size: 1rem;
+    font-size: small;
     font-family: Euclid, Roboto, Helvetica, Arial, sans-serif;
     line-height: 140%;
     font-style: normal;

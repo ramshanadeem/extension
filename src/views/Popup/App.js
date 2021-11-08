@@ -11,6 +11,8 @@ import NotMatch from "./pages/NotMatch";
 import Recover from "./Recover";
 import SeedPhrase from "./SeedPhrase";
 import Welcome from "./Welcome";
+import Activity from "./pages/Activity";
+import Assets from "./pages/Assets";
 
 function App() {
   const history = createMemoryHistory();
@@ -29,6 +31,8 @@ function App() {
             <Route path="/confirmPhrase" component={ConfirmPhrase} />
             <Route path="/createdMask" component={CreatedMask} />
             <Route path="/notMatch" component={NotMatch} />
+            <Route path="/Activity" component={Activity} />
+            <Route path="/Assets" component={Assets} />
           </Switch>
         </BrowserRouter>
       </header>

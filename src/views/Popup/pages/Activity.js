@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import { decrypt } from "../../../Utils/Utils";
+import {
+  decrypt,
+  fetchERC20Balance,
+  fetchERC20TokenInfo,
+  fetchERC20TxHistory,
+  fetchETHBalance,
+  fetchTxHistory,
+} from "../../../Utils/Utils";
 import "./CreatedMask.css";
-import { NavLink } from "react-router-dom";
+
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
 import { makeStyles } from "@material-ui/core/styles";
 // const Tx = require('ethereumjs-tx');
-
+import { NavLink } from "react-router-dom";
 import Web3 from "web3";
 import { EthereumIcon } from "../../../Assets";
-import { Typography } from "@mui/material";
 export const conciseAddress = (address) => {
   if (Web3.utils.isAddress(address)) {
     return `${address.slice(0, 6)}...${address.slice(
@@ -21,7 +31,7 @@ export const conciseAddress = (address) => {
 };
 // import { REMOVE_MNEMONIC } from '../../redux/actionTypes';
 
-const CreatedMask = () => {
+const Activity = () => {
   const classes = useStyles();
   const [publicKey, setPublicKey] = useState("");
   const [privateKey, setPrivateKey] = useState("");
@@ -31,8 +41,7 @@ const CreatedMask = () => {
   const [network, setNetwork] = useState("rinkeby");
   const [encryptedData, setEncryptedData] = useState("");
   const [encryptedPassword, setEncryptedPassword] = useState("");
-  const [customTokens, setCustomTokens] = useState([]);
-  const [totalBalance, setTotalBalance] = useState(0);
+  const [txHistory, setTxHistory] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -52,18 +61,7 @@ const CreatedMask = () => {
       // setSeedPhrase(mnemonic.phrase);
     })();
   }, []);
-  useEffect(() => {
-    (async () => {
-      let tokens = localStorage.getItem("tokens");
-      setEncryptedData(tokens);
-      // chrome.storage.sync.get(["tokens"], async ({ tokens }) => {
-      //   console.log("TOKENS==============", tokens);
-      if (tokens) {
-        // const getCustomTokenData = await fetchERC20TokenInfo(address)
-        setCustomTokens(tokens);
-      }
-    })();
-  }, []);
+
   let provider;
 
   useEffect(() => {
@@ -101,6 +99,28 @@ const CreatedMask = () => {
     }
   };
 
+  useEffect(() => {
+    if (address) {
+      (async () => {
+        const txHist = await fetchTxHistory(address, network);
+        const txERC20Hist = await fetchERC20TxHistory(address, network);
+
+        setTxHistory([...txHist.result, ...txERC20Hist.result]);
+      })();
+    }
+  }, [address, network]);
+
+  useEffect(() => {
+    if (address) {
+      (async () => {
+        const txHist = await fetchTxHistory(address, network);
+        const txERC20Hist = await fetchERC20TxHistory(address, network);
+
+        setTxHistory([...txHist.result, ...txERC20Hist.result]);
+      })();
+    }
+  }, [address, network]);
+
   return (
     <div style={{ height: 700, width: 400 }}>
       <div className="header">
@@ -128,25 +148,6 @@ const CreatedMask = () => {
           Account
           <br />
           {conciseAddress(address)}
-          <div
-            style={{ marginTop: "23px", marginLeft: "2px" }}
-            className="selected-account__copy"
-          >
-            <svg
-              width="11"
-              height="11"
-              viewBox="0 0 11 11"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M0 0H1H9V1H1V9H0V0ZM2 2H11V11H2V2ZM3 3H10V10H3V3Z"
-                fill="#989a9b"
-              ></path>
-            </svg>
-          </div>
         </Button>
 
         {/* <div className="address">{address}</div> */}
@@ -157,8 +158,8 @@ const CreatedMask = () => {
       <div
         style={{ display: "flex", flexDirection: "row", marginLeft: "90px" }}
       >
-        <button className="icon-button eth-overview__button">
-          <div className="icon-button__circle">
+        <button class="icon-button eth-overview__button">
+          <div class="icon-button__circle">
             <svg
               width="17"
               height="21"
@@ -184,11 +185,11 @@ const CreatedMask = () => {
         </button>
 
         <button
-          className="icon-button eth-overview__button"
+          class="icon-button eth-overview__button"
           data-testid="eth-overview-send"
           onClick={sendTransaction}
         >
-          <div className="icon-button__circle">
+          <div class="icon-button__circle">
             <svg
               width="15"
               height="15"
@@ -206,8 +207,8 @@ const CreatedMask = () => {
         </button>
 
         <button
-          className="icon-button eth-overview__button"
-          // data-testid="eth-overview-send"
+          class="icon-button eth-overview__button"
+          data-testid="eth-overview-send"
         >
           <div class="icon-button__circle">
             <svg
@@ -230,47 +231,24 @@ const CreatedMask = () => {
       </div>
       <div style={{ marginTop: "15%" }}>
         <ul className="tabs__list home__tabs">
-          <li
-            className="tab home__tab tab--active home__tab--active"
-            data-testid="home__asset-tab"
-          >
-            <Button className="asset">Assets</Button>
-          </li>
-          <li className="tab home__tab ">
-            <NavLink exact className="link" to="/Activity">
-              <Button>Activity</Button>
+          <li className="tab home__tab">
+            <NavLink exact className="link" to="/createdMask">
+              <Button className="asset">Assets</Button>
             </NavLink>
           </li>
+          <li
+            className="tab home__tab tab--active home__tab--active "
+            data-testid="home__activity-tab"
+          >
+            <Button>Activity</Button>
+          </li>
         </ul>
-      </div>
-      {/* <h4>Tokens In Wallet</h4> */}
-      {customTokens.map((ct) => (
-        <p>
-          {ct?.balance} {ct.symbol}
-        </p>
-      ))}
-      {/* <p>LINK BALANCE: ${linkBalance} LINK</p> */}
-      <div>
-        <Typography style={{ marginRight: "50%", height: "40px" }}>
-          Total Balance in USD: ${totalBalance}
-        </Typography>
-      </div>
-      <hr />
-
-      <div className="ImpToken">
-        <p className="typo"> Don't see your token?</p>
-        <Button>Import token</Button>
-        <p className="typo">
-          Need help? Contact{" "}
-          <Button style={{ fontVariant: "small-caps" }}>
-            MetaMask Support
-          </Button>
-        </p>
+        <p>{txHistory.length}</p>
       </div>
     </div>
   );
 };
-export default CreatedMask;
+export default Activity;
 const useStyles = makeStyles((theme) => ({
   dropdown: {
     borderRadius: "100px",
