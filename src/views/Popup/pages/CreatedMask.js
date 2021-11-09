@@ -4,6 +4,7 @@ import { decrypt } from "../../../Utils/Utils";
 import "./CreatedMask.css";
 import { NavLink } from "react-router-dom";
 import Button from "@mui/material/Button";
+import Popover from "../Components/Popover";
 import { makeStyles } from "@material-ui/core/styles";
 // const Tx = require('ethereumjs-tx');
 import { useHistory } from "react-router";
@@ -124,10 +125,16 @@ const CreatedMask = () => {
           </select>
         </div>
       </div>
-      <div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
         {/* <div className="account">Account</div> */}
 
-        <Button className={classes.addressBox}>
+        <Button style={{ marginLeft: "28%" }} className={classes.addressBox}>
           Account
           <br />
           {conciseAddress(address)}
@@ -151,6 +158,10 @@ const CreatedMask = () => {
             </svg>
           </div>
         </Button>
+        <div style={{ marginLeft: "20%" }}>
+          {" "}
+          <Popover />
+        </div>
 
         {/* <div className="address">{address}</div> */}
       </div>
@@ -295,5 +306,6 @@ const useStyles = makeStyles((theme) => ({
     width: "180px",
     borderRadius: 10,
     color: "#878181 !important",
+    marginLeft: "20%",
   },
 }));
