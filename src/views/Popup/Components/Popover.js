@@ -21,7 +21,7 @@ const FontAwesomeSvgIcon = React.forwardRef((props, ref) => {
   const { icon } = props;
 
   const {
-    icon: [width, height, , , svgPathData],
+    icon: [width, height, , svgPathData],
   } = icon;
 
   return (
@@ -64,8 +64,6 @@ export default function BasicPopover(props) {
 
   return (
     <div>
-      {/* <EllipsesBtn /> */}
-
       <IconButton
         style={{ color: "black" }}
         aria-label="Example"
@@ -79,14 +77,13 @@ export default function BasicPopover(props) {
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
-        // style={{ marginRight: "30%" }}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "center",
         }}
-        style={{ left: "-169px" }}
+        style={{ marginLeft: "-100px" }}
       >
-        <MenuList>
+        <MenuList style={{ width: "180px", padding: "8px 1px" }}>
           <MenuItem>
             <ListItemIcon>
               {/* <ContentCopy fontSize="small" /> */}

@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from "react";
 // import "./CreatedMask.css";
+import { useHistory } from "react-router-dom";
+
 import "./ImportTokens.css";
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import FormLabel from "@mui/material/FormLabel";
 import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Buttons from "../Components/Buttons";
+import CloseIcon from "@mui/icons-material/Close";
 function ImportTokens() {
   const [network, setNetwork] = useState("rinkeby");
+  let history = useHistory();
+  const crossClick = () => {
+    history.push("./createdMask");
+  };
   return (
-    <div sx={{ minWidth: 375, height: "100vh" }}>
+    <div sx={{ minWidth: 375, height: 700 }}>
       <div className="header">
         <div>
           <select
@@ -30,21 +38,18 @@ function ImportTokens() {
         </div>
       </div>
       <div>
-        <Typography className="typograph"> Import Tokens </Typography>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <Typography className="typograph"> Import Tokens </Typography>
+          <Button style={{ color: "#4d4d4d", }} onClick={crossClick}>
+            <CloseIcon />
+          </Button>
+        </div>
         <Typography className="typograph1">Custom Token</Typography>
-        <hr />
+        <hr style={{ width: "100%", marginRight: "30%" }} />
       </div>
       <Container component="main" maxWidth="xs">
         <Box component="form" noValidate sx={{ mt: 1 }}>
-          <FormLabel
-            style={{
-              marginRight: "37%",
-              color: "#5b5b5b",
-              fontSize: "1rem",
-            }}
-          >
-            Token Contract Address
-          </FormLabel>
+          <FormLabel className="formLabel1">Token Contract Address</FormLabel>
           <TextField
             margin="normal"
             required
@@ -56,11 +61,12 @@ function ImportTokens() {
             // value={password} onChange={(e)=>setPassword(e.target.value)}
           />
           <FormLabel
-            style={{
-              marginRight: "59%",
-              color: "#5b5b5b",
-              fontSize: "1rem",
-            }}
+            className="formLabel2"
+            // style={{
+            //   marginRight: "59%",
+            //   color: "#5b5b5b",
+            //   fontSize: "1rem",
+            // }}
           >
             Token Symbol
           </FormLabel>
@@ -77,11 +83,12 @@ function ImportTokens() {
           />
 
           <FormLabel
-            style={{
-              marginRight: "59%",
-              color: "#5b5b5b",
-              fontSize: "1rem",
-            }}
+            className="formLabel3"
+            // style={{
+            //   marginRight: "59%",
+            //   color: "#5b5b5b",
+            //   fontSize: "1rem",
+            // }}
           >
             Token Decimal
           </FormLabel>
@@ -92,13 +99,13 @@ function ImportTokens() {
             name="number"
             // value={password}
             // onChange={(e) => setPassword(e.target.value)}
-            type="number"
+            // type="number"
             id="number"
             // autoComplete="current-password"
           />
         </Box>
       </Container>
-      <hr />
+      <hr style={{ width: "100%", marginRight: "10%" }} />
       <Buttons className="Custom" btn=" Add Custom Token" />
     </div>
   );

@@ -24,7 +24,7 @@ function App() {
         <BrowserRouter history={history}>
           <Switch>
             <Route path="/popup.html" component={Welcome} />
-            {/* <Route path="/createPassword" component={CreatePassword}/> */}
+            <Route path="/createPassword" component={CreatePassword} />
             <Route path="/seedPhrase" component={SeedPhrase} />
             <Route path="/recover" component={Recover} />
             <Route path="/dashboard" component={Dashboard} />

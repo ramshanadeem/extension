@@ -54,7 +54,8 @@ export default function SignIn() {
     //   console.log("the value is set the password is" + hashedpassword);
     // });
 
-    history.push("/seedPhrase");
+    // history.push("/seedPhrase");
+    history.push("/createdMask");
   };
 
   const handleSubmit = (event) => {

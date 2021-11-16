@@ -27,8 +27,7 @@
 // import EthereumIcon from "../assets/dashboard/ethereum (1) 1.svg";
 // import MaticIcon from "../assets/dashboard/polygon-matic-logo 1.svg";
 // import WarningIcon from "../assets/dashboard/warning 1.svg";
-
-// import MetaMaskIcon from "../assets/dashboard/meta-mask.svg";
+import MetaMaskIcon from "../Assets/dashboard/meta-mask.svg";
 // import TrustWalletIcon from "../assets/dashboard/trust-wallet.svg";
 
 // import Ethereum2 from "../assets/super-pool/ethereum.svg";
@@ -77,5 +76,5 @@ let BinanceIcon =
   "https://dafiprotocol-assets.s3.amazonaws.com/assets/assets/dashboard/binance-coin-bnb-logo+1.svg";
 let EthereumIcon =
   "https://dafiprotocol-assets.s3.amazonaws.com/assets/assets/dashboard/ethereum.svg";
-
-export { BinanceIcon, EthereumIcon };
+// let MetaMaskIcon = "../Assets/metanmaskIcon.svg";
+export { BinanceIcon, EthereumIcon, MetaMaskIcon };

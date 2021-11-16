@@ -5,12 +5,14 @@ import "./CreatedMask.css";
 import { NavLink } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Popover from "../Components/Popover";
+
 import { makeStyles } from "@material-ui/core/styles";
 // const Tx = require('ethereumjs-tx');
 import { useHistory } from "react-router";
 import Web3 from "web3";
-import { EthereumIcon } from "../../../Assets";
+import { EthereumIcon, MetaMaskIcon } from "../../../Assets";
 import { Typography } from "@mui/material";
+
 export const conciseAddress = (address) => {
   if (Web3.utils.isAddress(address)) {
     return `${address.slice(0, 6)}...${address.slice(
@@ -37,6 +39,9 @@ const CreatedMask = () => {
   const history = useHistory();
   const importToken = () => {
     history.push("/Importoken");
+  };
+  const hello = () => {
+    alert("helooo");
   };
   useEffect(() => {
     (async () => {
@@ -106,8 +111,24 @@ const CreatedMask = () => {
   };
 
   return (
-    <div style={{ height: 700, width: 400 }}>
-      <div className="header">
+    <div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+        }}
+        className="header"
+      >
+        <div className="metamask">
+          <img
+            height="32px"
+            src={MetaMaskIcon}
+            // src="./images/logo/metamask-logo-horizontal.svg"
+            className="app-header__metafox-logo--horizontal"
+            alt=""
+          />
+        </div>
         <div>
           <select
             className="dropdown"
@@ -124,12 +145,63 @@ const CreatedMask = () => {
             <option value="goerli">Goerili</option>
           </select>
         </div>
+        <div
+          style={{ marginTop: "10px", marginRight: "12px", cursor: "pointer" }}
+          onClick={hello}
+        >
+          <div className="identicon__address-wrapper">
+            <div
+              className="identicon"
+              style={{ height: "32px", width: "32px", borderRadius: "16px" }}
+            >
+              <div
+                style={{
+                  borderRadius: "50px",
+                  overflow: "hidden",
+                  padding: "0px",
+                  margin: "0px",
+                  width: "32px",
+                  height: "32px",
+                  display: "inline-block",
+                  background: "rgb(24, 111, 242)",
+                }}
+              >
+                <svg x="0" y="0" width="32" height="32">
+                  <rect
+                    x="0"
+                    y="0"
+                    width="32"
+                    height="32"
+                    transform="translate(-0.17735677164861813 -0.16094307714567288) rotate(366.4 16 16)"
+                    fill="#C81429"
+                  ></rect>
+                  <rect
+                    x="0"
+                    y="0"
+                    width="32"
+                    height="32"
+                    transform="translate(-12.707245407161652 -5.515322276961629) rotate(299.7 16 16)"
+                    fill="#033E5E"
+                  ></rect>
+                  <rect
+                    x="0"
+                    y="0"
+                    width="32"
+                    height="32"
+                    transform="translate(13.766797707558483 -25.677791929681067) rotate(401.7 16 16)"
+                    fill="#F5F500"
+                  ></rect>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div
         style={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-between",
+          // justifyContent: "space-between",
         }}
       >
         {/* <div className="account">Account</div> */}
@@ -140,7 +212,7 @@ const CreatedMask = () => {
           {conciseAddress(address)}
           <div
             style={{ marginTop: "23px", marginLeft: "2px" }}
-            className="selected-account__copy"
+            // className="selected-account__copy"
           >
             <svg
               width="11"
@@ -158,12 +230,8 @@ const CreatedMask = () => {
             </svg>
           </div>
         </Button>
-        <div style={{ marginLeft: "20%" }}>
-          {" "}
-          <Popover />
-        </div>
 
-        {/* <div className="address">{address}</div> */}
+        <Popover />
       </div>
       <hr />
       <img src={EthereumIcon} />
@@ -243,9 +311,9 @@ const CreatedMask = () => {
         </button>
       </div>
       <div style={{ marginTop: "15%" }}>
-        <ul className="tabs__list home__tabs">
+        <ul style={{ paddingLeft: "0" }} className="tabs__list home__tabs">
           <li
-            className="tab home__tab tab--active home__tab--active"
+            className="tab home__tab tab--active"
             data-testid="home__asset-tab"
           >
             <Button className="asset">Assets</Button>

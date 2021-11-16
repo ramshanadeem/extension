@@ -4,7 +4,7 @@
     z-index: 12;
     display: flex;
     flex-flow: column nowrap;
-    width: 400px;
+    width: 500px;
     height: 70px;
     flex: 0 0 auto;
    color: #4d4d4d;
@@ -42,9 +42,9 @@
    border-color: transparent
    
 }
-.eth-overview__button {
+/* .eth-overview__button {
     margin-right: 24px;
-}
+} */
 .icon-button__circle {
     display: flex;
     justify-content: center;
@@ -62,11 +62,11 @@
     box-shadow: 0 3px 4px rgb(135 134 134 / 16%);
 }
 .tabs__list {
-    display: flex;
-    justify-content: flex-start;
+    /* display: flex; */
+    /* justify-content: flex-start; */
     border-bottom: 1px solid #d2d8dd;
     background-color: #fff;
-    position: sticky;
+    /* position: sticky; */
     top: 0;
     z-index: 1;
 }
@@ -114,10 +114,13 @@ ul{
 .assets{
     border-style: none;
     cursor: pointer;
+  
 }
 .tab--active {
     color: #000;
     border-bottom: 2px solid #037dd6;
+  /* margin-left: 0px !important;
+    margin-right: 190px */
 }
 .link{
     text-decoration: none;
@@ -141,4 +144,27 @@ ul{
 .address{
     font-size: small;
     color:#878181;
+}
+.identicon__address-wrapper {
+    height: 40px;
+    width: 40px;
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-style: solid;
+    border-radius: 50%;
+    border-width: 2px;
+    border-color: #037dd6;
+}
+.identicon {
+    direction: ltr;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.metamask{
+    margin-top: 15px;
 }
