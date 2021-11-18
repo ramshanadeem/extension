@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { ethers } from "ethers";
 import { decrypt } from "../../../Utils/Utils";
 import "./CreatedMask.css";
 import { NavLink } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Popover from "../Components/Popover";
+import MenuItem from "@mui/material/MenuItem";
 
+import Select from "@mui/material/Select";
+
+import Box from "@mui/material/Box";
 import { makeStyles } from "@material-ui/core/styles";
 // const Tx = require('ethereumjs-tx');
 import { useHistory } from "react-router";
 import Web3 from "web3";
 import { EthereumIcon, MetaMaskIcon } from "../../../Assets";
 import { Typography } from "@mui/material";
+import DropDown from "../Components/DropDown";
 
 export const conciseAddress = (address) => {
   if (Web3.utils.isAddress(address)) {
@@ -37,6 +43,10 @@ const CreatedMask = () => {
   const [customTokens, setCustomTokens] = useState([]);
   const [totalBalance, setTotalBalance] = useState(0);
   const history = useHistory();
+
+  const handleChange = (event) => {
+    setNetwork(event.target.value);
+  };
   const importToken = () => {
     history.push("/Importoken");
   };
@@ -110,13 +120,32 @@ const CreatedMask = () => {
     }
   };
 
+  function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
+
+  // Close the dropdown if the user clicks outside of it
+  window.onclick = function (event) {
+    if (!event.target.matches(".dropbtn")) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains("show")) {
+          openDropdown.classList.remove("show");
+        }
+      }
+    }
+  };
+
   return (
-    <div>
+    // <div style={{ height: "100vh" }}>
+    <Box sx={{ maxHeight: "100vh" }}>
       <div
         style={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-evenly",
+          justifyContent: "space-between",
         }}
         className="header"
       >
@@ -124,37 +153,96 @@ const CreatedMask = () => {
           <img
             height="32px"
             src={MetaMaskIcon}
-            // src="./images/logo/metamask-logo-horizontal.svg"
             className="app-header__metafox-logo--horizontal"
             alt=""
           />
         </div>
+        {/* <div className="app-header__network-component-wrapper"> */}
         <div>
-          <select
-            className="dropdown"
-            onChange={(e) => setNetwork(e.target.value)}
+          <Select
+            // className="menu-droppo-container network-droppo"
+            // className="dropdown"
+            value={network}
+            onChange={handleChange}
           >
-            <option className="dropdown" value="homestead">
-              Ethereum Mainnet
-            </option>
-            <option value="rinkeby" selected>
-              Rinkeby
-            </option>
-            <option value="ropsten">Ropsten</option>
-            <option value="kovan">Kovan</option>
-            <option value="goerli">Goerili</option>
-          </select>
+            <MenuItem value="homestead">
+              <div className="color-indicator color-indicator--filled color-indicator--border-color-mainnet color-indicator--color-mainnet color-indicator--size-lg">
+                {/* <span className="color-indicator__inner-circle"> </span> */}
+              </div>
+              <span> Ethereum Mainnet</span>
+            </MenuItem>
+            <MenuItem value="rinkeby" selected>
+              <div class="color-indicator color-indicator--filled color-indicator--border-color-white color-indicator--color-ropsten color-indicator--size-lg">
+                <span class="color-indicator__inner-circle"></span>
+                {/* <span class="network-name-item"></span> */}
+              </div>
+              Ropsten Test Network
+            </MenuItem>
+
+            <MenuItem value="ropsten">
+              <div class="color-indicator color-indicator--filled color-indicator--border-color-white color-indicator--color-kovan color-indicator--size-lg">
+                <span class="color-indicator__inner-circle"></span>
+                {/* <span class="network-name-item"></span> */}
+              </div>
+              Kovan
+            </MenuItem>
+            <MenuItem value="kovan">
+              <div class="color-indicator color-indicator--filled color-indicator--border-color-rinkeby color-indicator--color-rinkeby color-indicator--size-lg">
+                <span class="color-indicator__inner-circle"></span>
+              </div>
+              Rinkeby Test Network
+            </MenuItem>
+
+            <MenuItem value="goerli">
+              <div
+                class="  color-indicator color-indicator--filled
+              color-indicator--border-color-goerli color-indicator--color-goerli
+              color-indicator--size-lg Goerili"
+              >
+                <span class="color-indicator__inner-circle"></span>
+              </div>
+              Goerli Test Network
+            </MenuItem>
+
+            <MenuItem value="localhost 8545">
+              <div class="color-indicator color-indicator--filled color-indicator--border-color-ui-2 color-indicator--color-ui-2 color-indicator--size-lg">
+                <span class="color-indicator__inner-circle"></span>
+              </div>
+              Localhost 8545
+            </MenuItem>
+            <MenuItem value=" custom RPC">
+              <div class="color-indicator color-indicator--filled color-indicator--border-color-ui-2 color-indicator--color-transparent color-indicator--size-lg">
+                <span class="color-indicator__inner-circle"></span>
+              </div>
+              Custom RPC
+            </MenuItem>
+          </Select>
         </div>
+
         <div
-          style={{ marginTop: "10px", marginRight: "12px", cursor: "pointer" }}
-          onClick={hello}
+        // style={{
+        //   marginTop: "10px",
+        //   marginRight: "12px",
+        //   cursor: "pointer",
+        // }}
         >
-          <div className="identicon__address-wrapper">
+          {/*  */}
+          <div
+            style={{
+              marginTop: "10px",
+              marginRight: "12px",
+              cursor: "pointer",
+            }}
+            onClick={myFunction}
+            className="dropbtn"
+          >
             <div
               className="identicon"
               style={{ height: "32px", width: "32px", borderRadius: "16px" }}
             >
               <div
+                // className="svgbtn"
+                // onClick={myFunction}
                 style={{
                   borderRadius: "50px",
                   overflow: "hidden",
@@ -195,18 +283,32 @@ const CreatedMask = () => {
               </div>
             </div>
           </div>
+          <div id="myDropdown" className="dropdown-content">
+            <Link to="/">Create Account</Link>
+            <Link to="/">Import Account</Link>
+            <Link to="/">Connet Hardware Wallet</Link>
+            <Link to="/">Support</Link>
+            <Link to="/">Setting</Link>
+          </div>
         </div>
       </div>
       <div
         style={{
           display: "flex",
           flexDirection: "row",
-          // justifyContent: "space-between",
+          justifyContent: "space-evenly",
+          // position: "fixed",
+          overflowY: "hidden",
         }}
       >
         {/* <div className="account">Account</div> */}
-
-        <Button style={{ marginLeft: "28%" }} className={classes.addressBox}>
+        <button class="connected-status-indicator">
+          <div class="color-indicator color-indicator--color-ui-4 color-indicator--size-sm">
+            <span class="color-indicator__inner-circle"></span>
+          </div>
+          <div class="connected-status-indicator__text">Not connected</div>
+        </button>
+        <Button className={classes.addressBox}>
           Account
           <br />
           {conciseAddress(address)}
@@ -349,7 +451,7 @@ const CreatedMask = () => {
           </Button>
         </p>
       </div>
-    </div>
+    </Box>
   );
 };
 export default CreatedMask;
@@ -367,13 +469,41 @@ const useStyles = makeStyles((theme) => ({
 
   addressBox: {
     background: "transparent",
+
+    "&:hover": {
+      background: "transparent",
+    },
     // display: "flex",
-    alignItems: "center",
+    // alignItems: "center",
     border: "1px solid rgba(255, 255, 255, 0.28)",
+    marginTop: "2px",
     height: "100%",
     width: "180px",
     borderRadius: 10,
     color: "#878181 !important",
-    marginLeft: "20%",
+    // marginLeft: "20%",
+    marginRight: "50px",
+  },
+  select1: {
+    height: "40px",
+    width: "40px",
+    borderRadius: "18px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderStyle: "solid",
+    borderRadius: "50%",
+    borderWidth: "2px",
+    borderColor: "#037dd6",
+  },
+  innerSelect: {
+    borderRadius: "50px",
+    overflow: "hidden",
+    padding: "0px",
+    margin: "0px",
+    width: "32px",
+    height: "32px",
+    display: "inline-block",
+    background: "rgb(24, 111, 242)",
   },
 }));

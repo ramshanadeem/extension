@@ -69,7 +69,10 @@ export default function BasicPopover(props) {
         aria-label="Example"
         onClick={handleClick}
       >
-        <FontAwesomeIcon style={{ fontSize: "20px" }} icon={faEllipsisV} />
+        <FontAwesomeIcon
+          style={{ fontSize: "20px", marginTop: "8px" }}
+          icon={faEllipsisV}
+        />
       </IconButton>
 
       <Popover
@@ -81,9 +84,21 @@ export default function BasicPopover(props) {
           vertical: "bottom",
           horizontal: "center",
         }}
-        style={{ marginLeft: "-100px" }}
+        style={{
+          marginLeft: "-100px",
+          boxSizing: "border-box",
+          postion: "fixed",
+          // overflowY: "hidden",
+        }}
       >
-        <MenuList style={{ width: "180px", padding: "8px 1px" }}>
+        <MenuList
+          style={{
+            width: "100%",
+            padding: "8px 1px",
+            postion: "fixed",
+            // overflowY: "hidden",
+          }}
+        >
           <MenuItem>
             <ListItemIcon>
               {/* <ContentCopy fontSize="small" /> */}

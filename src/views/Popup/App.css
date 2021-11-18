@@ -1,13 +1,25 @@
 body {
   margin: 0;
-  font-family: 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: Euclid, Roboto, Helvetica, Arial, sans-serif;
+
+  /* font-family: 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased; */
   -moz-osx-font-smoothing: grayscale;
+  
 
   padding-right: 0px !important;
-    
+  overflow: scroll;
+  overflow-x: hidden;
 }
+::-webkit-scrollbar {
+  width: 0;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+
+    
+
 
 /* 
 code {
