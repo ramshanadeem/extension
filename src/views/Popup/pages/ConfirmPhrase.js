@@ -184,13 +184,19 @@ function ConfirmPhrase() {
         {/* <Button variant="outlined" onClick={handleClickOpen}>
           Slide in alert dialog
         </Button> */}
-        <Button
+        {/* <Buttons
           // className="createBtn"
           disabled={showResults.length != 12}
           onClick={handleClickOpen}
-        >
-          Confirm
-        </Button>
+          
+        /> */}
+        <Buttons
+          disabled={showResults.length != 12}
+          onClick={handleClickOpen}
+          style={{ width: "20px" }}
+          btn="Confirm"
+          className="createBtn"
+        />
       </div>
 
       <Dialog

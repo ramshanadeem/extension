@@ -28,6 +28,7 @@ const theme = createTheme();
 
 export default function SignIn() {
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
   const createWallet = async () => {
@@ -63,7 +64,7 @@ export default function SignIn() {
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
     console.log({
-      email: data.get("password"),
+      email: data.get("email"),
       password: data.get("password"),
     });
   };
@@ -111,9 +112,11 @@ export default function SignIn() {
                 margin="normal"
                 required
                 fullWidth
-                id="email"
-                name="email"
-                autoComplete="email"
+                id="password"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="password"
                 autoFocus
                 // value={password} onChange={(e)=>setPassword(e.target.value)}
               />
@@ -158,7 +161,15 @@ export default function SignIn() {
                     marginBottom: "30px",
                   }}
                 >
+                  {/* <Buttons
+                    disabled={!password}
+                    onClick={createWallet}
+                    style={{ width: "20px" }}
+                    btn="Create"
+                    className="createBtn"
+                  /> */}
                   <Buttons
+                    disabled={!password}
                     onClick={createWallet}
                     style={{ width: "20px" }}
                     btn="Create"

@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { ethers } from "ethers";
-import { decrypt } from "../../../Utils/Utils";
+import {
+  CrytoToUSD,
+  decrypt,
+  fetchERC20TokenInfo,
+  fetchETHBalance,
+} from "../../../Utils/Utils";
+import Btnsvg from "../../../Assets/plusBtn.svg";
+import importAccont from "../../../Assets/importAccount.svg";
+import connectIcon from "../../../Assets/connectIcon.svg";
+import support from "../../../Assets/support.svg";
+import settings from "../../../Assets/settings.svg";
 import "./CreatedMask.css";
+import Buttons from "../Components/Buttons";
 import { NavLink } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Popover from "../Components/Popover";
@@ -18,6 +29,8 @@ import Web3 from "web3";
 import { EthereumIcon, MetaMaskIcon } from "../../../Assets";
 import { Typography } from "@mui/material";
 import DropDown from "../Components/DropDown";
+import { ETHERSCAN_API_KEY } from "../../../Constant";
+import axios from "axios";
 
 export const conciseAddress = (address) => {
   if (Web3.utils.isAddress(address)) {
@@ -37,6 +50,8 @@ const CreatedMask = () => {
   const [address, setAddress] = useState("");
   const [seedPhrase, setSeedPhrase] = useState("");
   const [balance, setBalance] = useState("");
+  const [usd, setUSD] = useState(0);
+
   const [network, setNetwork] = useState("rinkeby");
   const [encryptedData, setEncryptedData] = useState("");
   const [encryptedPassword, setEncryptedPassword] = useState("");
@@ -77,27 +92,78 @@ const CreatedMask = () => {
       setEncryptedData(tokens);
       // chrome.storage.sync.get(["tokens"], async ({ tokens }) => {
       //   console.log("TOKENS==============", tokens);
+      // });
       if (tokens) {
-        // const getCustomTokenData = await fetchERC20TokenInfo(address)
-        setCustomTokens(tokens);
+        const getCustomTokenData = await fetchERC20TokenInfo(address);
+        console.log("tttt", getCustomTokenData);
+        setCustomTokens(getCustomTokenData);
       }
     })();
   }, []);
   let provider;
 
+  let providers = ethers.getDefaultProvider(network, {
+    etherscan: ETHERSCAN_API_KEY,
+    // infura: YOUR_INFURA_PROJECT_ID,
+    // Or if using a project secret:
+    // infura: {
+    //   projectId: YOUR_INFURA_PROJECT_ID,
+    //   projectSecret: YOUR_INFURA_PROJECT_SECRET,
+    // },
+    // alchemy: YOUR_ALCHEMY_API_KEY,
+    // pocket: YOUR_POCKET_APPLICATION_KEY,
+    // Or if using an application secret key:
+    // pocket: {
+    //   applicationId: ,
+    //   applicationSecretKey:
+    // }
+  });
+
   useEffect(() => {
     (async () => {
       try {
-        provider = ethers.getDefaultProvider(network);
-        provider.getBlockWithTransactions();
-        console.log("PROVIDER", provider);
-        const balance = await provider.getBalance(address);
-        setBalance(ethers.utils.formatEther(balance));
+        // let address = localStorage.getItem("address");
+        // providers = ethers.getDefaultProvider(address, network);
+        // providers.getBlockWithTransactions();
+        // console.log("PROVIDER", providers);
+        // const bal= await provider.fetchEthBalance()
+        if (address) {
+          const balance = await fetchETHBalance(address, network);
+          console.log("bbbbbb", balance);
+
+          setBalance(ethers.utils.formatUnits(balance));
+
+          console.log("ethbalamce is", balance);
+        }
+        // const balance = await provider.getBalance(address);
+        // setBalance(ethers.utils.formatEther(balance));
       } catch (error) {
         console.log("ERR===", error);
       }
     })();
-  }, [network, balance]);
+  }, [balance, address]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        if (address) {
+          //     const usd = await CrytoToUSD(address, network);
+
+          // if (address) {
+          let { data } = await axios.get(
+            `https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd`
+          );
+          console.log("usd", data.ethereum.usd);
+
+          setUSD(balance * data.ethereum.usd);
+
+          console.log("usd is", usd);
+        }
+      } catch (error) {
+        console.log("ERR===", error);
+      }
+    })();
+  }, [balance, address]);
 
   const sendTransaction = async () => {
     try {
@@ -157,24 +223,16 @@ const CreatedMask = () => {
             alt=""
           />
         </div>
-        {/* <div className="app-header__network-component-wrapper"> */}
+
         <div>
-          <Select
-            // className="menu-droppo-container network-droppo"
-            // className="dropdown"
-            value={network}
-            onChange={handleChange}
-          >
+          <Select value={network} onChange={handleChange}>
             <MenuItem value="homestead">
-              <div className="color-indicator color-indicator--filled color-indicator--border-color-mainnet color-indicator--color-mainnet color-indicator--size-lg">
-                {/* <span className="color-indicator__inner-circle"> </span> */}
-              </div>
-              <span> Ethereum Mainnet</span>
+              <div className="color-indicator color-indicator--filled color-indicator--border-color-mainnet color-indicator--color-mainnet color-indicator--size-lg"></div>
+              <span> Ethereum Mainnet </span>
             </MenuItem>
             <MenuItem value="rinkeby" selected>
               <div class="color-indicator color-indicator--filled color-indicator--border-color-white color-indicator--color-ropsten color-indicator--size-lg">
                 <span class="color-indicator__inner-circle"></span>
-                {/* <span class="network-name-item"></span> */}
               </div>
               Ropsten Test Network
             </MenuItem>
@@ -182,7 +240,6 @@ const CreatedMask = () => {
             <MenuItem value="ropsten">
               <div class="color-indicator color-indicator--filled color-indicator--border-color-white color-indicator--color-kovan color-indicator--size-lg">
                 <span class="color-indicator__inner-circle"></span>
-                {/* <span class="network-name-item"></span> */}
               </div>
               Kovan
             </MenuItem>
@@ -219,14 +276,7 @@ const CreatedMask = () => {
           </Select>
         </div>
 
-        <div
-        // style={{
-        //   marginTop: "10px",
-        //   marginRight: "12px",
-        //   cursor: "pointer",
-        // }}
-        >
-          {/*  */}
+        <div>
           <div
             style={{
               marginTop: "10px",
@@ -241,8 +291,6 @@ const CreatedMask = () => {
               style={{ height: "32px", width: "32px", borderRadius: "16px" }}
             >
               <div
-                // className="svgbtn"
-                // onClick={myFunction}
                 style={{
                   borderRadius: "50px",
                   overflow: "hidden",
@@ -284,11 +332,56 @@ const CreatedMask = () => {
             </div>
           </div>
           <div id="myDropdown" className="dropdown-content">
-            <Link to="/">Create Account</Link>
-            <Link to="/">Import Account</Link>
-            <Link to="/">Connet Hardware Wallet</Link>
-            <Link to="/">Support</Link>
-            <Link to="/">Setting</Link>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+              }}
+            >
+              <Typography className={classes.typography}>
+                My Accounts
+              </Typography>
+              <Buttons className={classes.btn} btn="Lock" />
+            </div>
+            <div className="account-menu__divider"></div>
+
+            <Link to="/">
+              <img
+                style={{ height: "12px", marginRight: "5px" }}
+                src={Btnsvg}
+              />
+              Create Account
+            </Link>
+            <Link to="/">
+              <img
+                style={{ height: "13px", marginRight: "5px" }}
+                src={importAccont}
+              />
+              Import Account
+            </Link>
+            <Link to="/">
+              <img
+                style={{ height: "12px", marginRight: "5px" }}
+                src={connectIcon}
+              />
+              Connet Hardware Wallet
+            </Link>
+            <div className="account-menu__divider"></div>
+            <Link to="/">
+              <img
+                style={{ height: "12px", marginRight: "5px" }}
+                src={support}
+              />
+              Support
+            </Link>
+            <Link to="/">
+              <img
+                style={{ height: "12px", marginRight: "5px" }}
+                src={settings}
+              />
+              Setting
+            </Link>
           </div>
         </div>
       </div>
@@ -297,11 +390,10 @@ const CreatedMask = () => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-evenly",
-          // position: "fixed",
+
           overflowY: "hidden",
         }}
       >
-        {/* <div className="account">Account</div> */}
         <button class="connected-status-indicator">
           <div class="color-indicator color-indicator--color-ui-4 color-indicator--size-sm">
             <span class="color-indicator__inner-circle"></span>
@@ -312,10 +404,7 @@ const CreatedMask = () => {
           Account
           <br />
           {conciseAddress(address)}
-          <div
-            style={{ marginTop: "23px", marginLeft: "2px" }}
-            // className="selected-account__copy"
-          >
+          <div style={{ marginTop: "23px", marginLeft: "2px" }}>
             <svg
               width="11"
               height="11"
@@ -337,7 +426,11 @@ const CreatedMask = () => {
       </div>
       <hr />
       <img src={EthereumIcon} />
-      <p>{balance} ETH</p>
+
+      <p>
+        {balance}
+        ETH
+      </p>
       <div
         style={{ display: "flex", flexDirection: "row", marginLeft: "90px" }}
       >
@@ -389,10 +482,7 @@ const CreatedMask = () => {
           <span>Send</span>
         </button>
 
-        <button
-          className="icon-button eth-overview__button"
-          // data-testid="eth-overview-send"
-        >
+        <button className="icon-button eth-overview__button">
           <div class="icon-button__circle">
             <svg
               width="17"
@@ -436,9 +526,10 @@ const CreatedMask = () => {
       {/* <p>LINK BALANCE: ${linkBalance} LINK</p> */}
       <div>
         <Typography style={{ marginRight: "50%", height: "40px" }}>
-          Total Balance in USD: ${totalBalance}
+          Total Balance in USD: ${usd}
         </Typography>
       </div>
+
       <hr />
 
       <div className="ImpToken">
@@ -505,5 +596,27 @@ const useStyles = makeStyles((theme) => ({
     height: "32px",
     display: "inline-block",
     background: "rgb(24, 111, 242)",
+  },
+  typography: {
+    // marginRight: "180px",
+    paddingTop: "18px",
+    paddingBottom: "18px",
+  },
+  btn: {
+    fontsize: "0.75rem !important",
+    fontFamily: "Euclid, Roboto, Helvetica, Arial, sans-serif",
+    lineHeight: "140% !important",
+    fontStyle: "normal",
+    fontWeight: "normal",
+    border: " 1px solid #fff !important",
+    color: "#fff !important",
+    padding: "3.5px 24px !important",
+    width: "59px !important",
+    borderRadius: "100px !important",
+
+    color: "#6a737d",
+    // border: "1px solid #b3b3b3",
+    backgroundColor: "transparent !important",
+    border: "1px solid #5d5d5d !important",
   },
 }));

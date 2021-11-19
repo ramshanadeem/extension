@@ -103,7 +103,7 @@ function SeedPhrase() {
       </div>
       {/* <p>{mnemonics}</p> */}
       <div style={{ marginTop: "30px" }}>
-        <Link to="/confirmPhrase">
+        <Link style={{ textDecoration: "none" }} to="/confirmPhrase">
           <Buttons className="createBtn" btn="Next" />
         </Link>
       </div>

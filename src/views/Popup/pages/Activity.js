@@ -110,16 +110,16 @@ const Activity = () => {
     }
   }, [address, network]);
 
-  useEffect(() => {
-    if (address) {
-      (async () => {
-        const txHist = await fetchTxHistory(address, network);
-        const txERC20Hist = await fetchERC20TxHistory(address, network);
+  // useEffect(() => {
+  //   if (address) {
+  //     (async () => {
+  //       const txHist = await fetchTxHistory(address, network);
+  //       const txERC20Hist = await fetchERC20TxHistory(address, network);
 
-        setTxHistory([...txHist.result, ...txERC20Hist.result]);
-      })();
-    }
-  }, [address, network]);
+  //       setTxHistory([...txHist.result, ...txERC20Hist.result]);
+  //     })();
+  //   }
+  // }, [address, network]);
 
   return (
     <div style={{ height: 700, width: 400 }}>
