@@ -14,6 +14,7 @@ import Welcome from "./Welcome";
 import Activity from "./pages/Activity";
 import Assets from "./pages/Assets";
 import ImportTokens from "./pages/ImportTokens";
+import UnlockWallet from "./pages/UnlockWallet";
 
 function App() {
   const history = createMemoryHistory();
@@ -35,6 +36,7 @@ function App() {
             <Route path="/Activity" component={Activity} />
             <Route path="/Assets" component={Assets} />
             <Route path="/Importoken" component={ImportTokens} />
+            <Route path="/UnlockWallet" component={UnlockWallet} />
           </Switch>
         </BrowserRouter>
       </header>

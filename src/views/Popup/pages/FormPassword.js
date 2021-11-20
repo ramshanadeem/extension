@@ -19,6 +19,7 @@ import "./Cards.css";
 import { ethers } from "ethers";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+import { Message, MovingSharp } from "@mui/icons-material";
 
 function Copyright(props) {
   return <></>;
@@ -27,15 +28,18 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const [password, setPassword] = useState("");
+  const [password1, setPassword1] = useState("");
+  const [password2, setPassword2] = useState("");
   const [email, setEmail] = useState("");
+
   const dispatch = useDispatch();
   const history = useHistory();
+  let msg = {};
   const createWallet = async () => {
     let randomSeed = ethers.Wallet.createRandom();
     console.log("randomseed.menmonics", randomSeed.mnemonic);
     console.log("randomSeed.address", randomSeed.address);
-    let hashedpassword = ethers.utils.hashMessage(password);
+    let hashedpassword = ethers.utils.hashMessage(password1);
     console.log("hashedpassword", hashedpassword);
     let encryptPromise = await randomSeed.encrypt(hashedpassword);
 
@@ -56,7 +60,25 @@ export default function SignIn() {
     // });
 
     // history.push("/seedPhrase");
-    history.push("/createdMask");
+
+    // If password not entered
+
+    if (password1 == "") alert("Please enter Password");
+    // If confirm password not entered
+    else if (password2 == "") alert("Please enter confirm password");
+    // If Not same return False.
+    else if (password1 != password2) {
+      msg["pass"] = "not matched";
+
+      // alert("\nPassword did not match: Please try again...");
+      return false;
+    }
+
+    // If same return True.
+    else {
+      history.push("/createdMask");
+      return true;
+    }
   };
 
   const handleSubmit = (event) => {
@@ -65,7 +87,7 @@ export default function SignIn() {
     // eslint-disable-next-line no-console
     console.log({
       email: data.get("email"),
-      password: data.get("password"),
+      password1: data.get("password"),
     });
   };
 
@@ -113,9 +135,9 @@ export default function SignIn() {
                 required
                 fullWidth
                 id="password"
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                name="password1"
+                value={password1}
+                onChange={(e) => setPassword1(e.target.value)}
                 autoComplete="password"
                 autoFocus
                 // value={password} onChange={(e)=>setPassword(e.target.value)}
@@ -133,14 +155,14 @@ export default function SignIn() {
                 margin="normal"
                 required
                 fullWidth
-                name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                name="password2"
+                value={password2}
+                onChange={(e) => setPassword2(e.target.value)}
                 type="password"
                 id="password"
                 autoComplete="current-password"
               />
-
+              <span>{msg.pass}</span>
               <FormGroup>
                 {/* <FormControlLabel style={{color:"#939090",fontWeight:"inherit",fontSize:"inherit"}} control={<Checkbox defaultChecked />}  /> */}
 
@@ -169,7 +191,7 @@ export default function SignIn() {
                     className="createBtn"
                   /> */}
                   <Buttons
-                    disabled={!password}
+                    disabled={!password1}
                     onClick={createWallet}
                     style={{ width: "20px" }}
                     btn="Create"

@@ -65,8 +65,8 @@ const CreatedMask = () => {
   const importToken = () => {
     history.push("/Importoken");
   };
-  const hello = () => {
-    alert("helooo");
+  const lockWallet = () => {
+    history.push("./UnlockWallet");
   };
   useEffect(() => {
     (async () => {
@@ -342,7 +342,11 @@ const CreatedMask = () => {
               <Typography className={classes.typography}>
                 My Accounts
               </Typography>
-              <Buttons className={classes.btn} btn="Lock" />
+              <Buttons
+                onClick={lockWallet}
+                className={classes.btn}
+                btn="Lock"
+              />
             </div>
             <div className="account-menu__divider"></div>
 
@@ -605,18 +609,18 @@ const useStyles = makeStyles((theme) => ({
   btn: {
     fontsize: "0.75rem !important",
     fontFamily: "Euclid, Roboto, Helvetica, Arial, sans-serif",
-    lineHeight: "140% !important",
     fontStyle: "normal",
     fontWeight: "normal",
-    border: " 1px solid #fff !important",
-    color: "#fff !important",
-    padding: "3.5px 24px !important",
-    width: "59px !important",
-    borderRadius: "100px !important",
-
+    marginTop: "12.5px !important",
+    fontFamily: "Euclid, Roboto, Helvetica, Arial, sans-serif !important",
+    width: "40px !important",
+    height: "30px",
     color: "#6a737d",
-    // border: "1px solid #b3b3b3",
     backgroundColor: "transparent !important",
     border: "1px solid #5d5d5d !important",
+    borderRadius: "20px !important",
+    fontSize: "0.82rem !important",
+    marginLeft: " 100px !important",
+    textTransform: "capitalize !important",
   },
 }));
