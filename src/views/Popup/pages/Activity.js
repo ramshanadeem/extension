@@ -42,7 +42,7 @@ const Activity = () => {
   const [encryptedData, setEncryptedData] = useState("");
   const [encryptedPassword, setEncryptedPassword] = useState("");
   const [txHistory, setTxHistory] = useState([]);
-
+  const [ERC20History, setERC20History] = useState([]);
   useEffect(() => {
     (async () => {
       let data = localStorage.getItem("data");
@@ -105,7 +105,9 @@ const Activity = () => {
         const txHist = await fetchTxHistory(address, network);
         const txERC20Hist = await fetchERC20TxHistory(address, network);
 
-        setTxHistory([...txHist.result, ...txERC20Hist.result]);
+        setTxHistory([...txHist.result]);
+
+        setERC20History([...txERC20Hist.result]);
       })();
     }
   }, [address, network]);
@@ -243,7 +245,23 @@ const Activity = () => {
             <Button>Activity</Button>
           </li>
         </ul>
-        <p>{txHistory.length}</p>
+        {/* <p>{txHistory.result.value}</p> */}
+        <p>Transaction history </p>
+        {txHistory.map((v, k) => {
+          if (address === v.from) {
+            return <p key={k}>{v.from}</p>;
+          } else {
+            return <p style={{ fontSize: "12px" }}> you recieved:{v.value}</p>;
+          }
+        })}
+        <p>ETH Transaction history </p>
+        {ERC20History.map((v, k) => {
+          if (address === v.from) {
+            return <p key={k}>you send {v.value}</p>;
+          } else {
+            return <p style={{ fontSize: "12px" }}> you recieved:{v.value}</p>;
+          }
+        })}
       </div>
       <div className="ImpToken">
         <p className="typo">

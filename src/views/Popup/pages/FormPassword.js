@@ -19,8 +19,8 @@ import "./Cards.css";
 import { ethers } from "ethers";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { Message, MovingSharp } from "@mui/icons-material";
-
+import useForm from "./useForm";
+import ValidateInfo from "./ValidateInfo";
 function Copyright(props) {
   return <></>;
 }
@@ -28,18 +28,24 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const [password1, setPassword1] = useState("");
-  const [password2, setPassword2] = useState("");
-  const [email, setEmail] = useState("");
+  const { handleChange, values, handleSubmit, errors, user, valid } =
+    useForm(ValidateInfo);
+
+  // const [password, setPassword] = useState("");
+  // const [password2, setPassword2] = useState("");
 
   const dispatch = useDispatch();
   const history = useHistory();
-  let msg = {};
+
+  if (valid) {
+    history.push("/createdMask");
+  }
+
   const createWallet = async () => {
     let randomSeed = ethers.Wallet.createRandom();
     console.log("randomseed.menmonics", randomSeed.mnemonic);
     console.log("randomSeed.address", randomSeed.address);
-    let hashedpassword = ethers.utils.hashMessage(password1);
+    let hashedpassword = ethers.utils.hashMessage(values.password);
     console.log("hashedpassword", hashedpassword);
     let encryptPromise = await randomSeed.encrypt(hashedpassword);
 
@@ -60,36 +66,17 @@ export default function SignIn() {
     // });
 
     // history.push("/seedPhrase");
-
-    // If password not entered
-
-    if (password1 == "") alert("Please enter Password");
-    // If confirm password not entered
-    else if (password2 == "") alert("Please enter confirm password");
-    // If Not same return False.
-    else if (password1 != password2) {
-      msg["pass"] = "not matched";
-
-      // alert("\nPassword did not match: Please try again...");
-      return false;
-    }
-
-    // If same return True.
-    else {
-      history.push("/createdMask");
-      return true;
-    }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password1: data.get("password"),
-    });
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+
+  //   console.log({
+  //     email: data.get("email"),
+  //     password1: data.get("password"),
+  //   });
+  // };
 
   return (
     <Box sx={{ minWidth: 375, height: "100vh" }}>
@@ -115,12 +102,7 @@ export default function SignIn() {
             >
               Create Password
             </Typography>
-            <Box
-              component="form"
-              onSubmit={handleSubmit}
-              noValidate
-              sx={{ mt: 1 }}
-            >
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <FormLabel
                 style={{
                   marginRight: "37%",
@@ -135,13 +117,16 @@ export default function SignIn() {
                 required
                 fullWidth
                 id="password"
-                name="password1"
-                value={password1}
-                onChange={(e) => setPassword1(e.target.value)}
-                autoComplete="password"
-                autoFocus
-                // value={password} onChange={(e)=>setPassword(e.target.value)}
+                type="password"
+                name="password"
+                error={errors.password ? true : false}
+                helperText={errors.password}
+                value={values.password}
+                onChange={handleChange}
               />
+              {/* <p style={{ color: "red", fontSize: "12px", marginRight: "35%" }}>
+                {errors.password}
+              </p> */}
               <FormLabel
                 style={{
                   marginRight: "59%",
@@ -156,13 +141,19 @@ export default function SignIn() {
                 required
                 fullWidth
                 name="password2"
-                value={password2}
-                onChange={(e) => setPassword2(e.target.value)}
+                error={errors.password2 ? true : false}
+                helperText={errors.password2}
+                value={values.password2}
+                onChange={handleChange}
                 type="password"
                 id="password"
                 autoComplete="current-password"
               />
-              <span>{msg.pass}</span>
+
+              {/* <p style={{ color: "red", fontSize: "12px", marginRight: "58%" }}>
+                {" "}
+                {errors.password2}
+              </p> */}
               <FormGroup>
                 {/* <FormControlLabel style={{color:"#939090",fontWeight:"inherit",fontSize:"inherit"}} control={<Checkbox defaultChecked />}  /> */}
 
@@ -190,13 +181,20 @@ export default function SignIn() {
                     btn="Create"
                     className="createBtn"
                   /> */}
-                  <Buttons
-                    disabled={!password1}
+                  {/* <Buttons
+                    disabled={!password}
                     onClick={createWallet}
                     style={{ width: "20px" }}
                     btn="Create"
                     className="createBtn"
-                  />
+                  /> */}
+                  <button
+                    onClick={createWallet}
+                    type="submit"
+                    className="createBtn"
+                  >
+                    create
+                  </button>
                 </div>
               </FormGroup>
             </Box>

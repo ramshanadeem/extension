@@ -529,8 +529,10 @@ const CreatedMask = () => {
       ))}
       {/* <p>LINK BALANCE: ${linkBalance} LINK</p> */}
       <div>
-        <Typography style={{ marginRight: "50%", height: "40px" }}>
-          Total Balance in USD: ${usd}
+        <Typography
+          style={{ marginRight: "50%", height: "40px", fontsize: "12px" }}
+        >
+          Total Balance in USD:${usd}
         </Typography>
       </div>
 

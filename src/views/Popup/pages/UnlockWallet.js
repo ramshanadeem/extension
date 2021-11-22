@@ -7,17 +7,44 @@ import { makeStyles } from "@material-ui/core/styles";
 import Buttons from "../Components/Buttons";
 import Button from "@mui/material/Button";
 import { useHistory } from "react-router";
+import { ethers } from "ethers";
+import ValidateInfo from "./ValidateInfo";
+import useForm from "./useForm";
 function UnlockWallet() {
+  const { handleSubmit } = useForm(ValidateInfo);
+
   const classes = useStyles();
   const [network, setNetwork] = useState("rinkeby");
   const [password, setPassword] = useState("");
   const history = useHistory();
-  const handleChange = (event) => {
+
+  const ONChange = (event) => {
     setNetwork(event.target.value);
   };
-  const unlock = () => {
-    history.push("/createdMask");
+
+  const unlock = async () => {
+    // let randomSeed = ethers.Wallet.createRandom();
+    // console.log("randomseed.menmonics", randomSeed.mnemonic);
+    // console.log("randomSeed.address", randomSeed.address);
+    let hashedpassword2 = ethers.utils.hashMessage(password);
+    console.log("hashedpassword", hashedpassword2);
+    // let encryptPromise = await randomSeed.encrypt(hashedpassword);
+
+    // console.log("ENCRYOPTED====", encryptPromise);
+    // localStorage.setItem("data", encryptPromise);
+    // console.log("value is set to the data is " + encryptPromise);
+    // setEncryptedData(data);
+
+    localStorage.setItem("hashedpassword2", hashedpassword2);
+    console.log("value of hashed2 ", hashedpassword2);
+    console.log("the value is set the passwordunlock is" + hashedpassword2);
+
+    if (hashedpassword2 === localStorage.hashedpassword) {
+      console.log("matched password==========");
+      history.push("/createdMask");
+    }
   };
+
   return (
     <div style={{ height: "100%" }}>
       <div
@@ -37,11 +64,7 @@ function UnlockWallet() {
           />
         </div>
         <div style={{ marginRight: "10px" }}>
-          <Select
-            style={{ right: "60px" }}
-            value={network}
-            onChange={handleChange}
-          >
+          <Select style={{ right: "60px" }} value={network} onChange={ONChange}>
             <MenuItem value="homestead">
               <div className="color-indicator color-indicator--filled color-indicator--border-color-mainnet color-indicator--color-mainnet color-indicator--size-lg"></div>
               <span> Ethereum Mainnet </span>
@@ -101,24 +124,35 @@ function UnlockWallet() {
         <br />
       </div>
 
-      <div>
+      <div component="form" onSubmit={handleSubmit}>
         <TextField
           style={{ marginTop: "80px", width: "350px" }}
-          id="standard-password-input"
-          label="Password"
+          margin="normal"
+          required
+          fullWidth
+          id="password"
           type="password"
-          autoComplete="current-password"
+          name="password"
+          // error={errors.password ? true : false}
+          // helperText={errors.password}
+          // value={values.password}
+          // onChange={handleChange}
           variant="standard"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
         />
+
+        {console.log("value========", password)}
         <div className={classes.btnDiv}>
-          <Buttons
+          {/* <Buttons
             disabled={!password}
             onClick={unlock}
             className={classes.unlockBtn}
             btn="Unlock"
-          />
+          /> */}
+          <button type="submit" className="createBtn" onClick={unlock}>
+            Unlock
+          </button>
         </div>
         <br />
         <span>
