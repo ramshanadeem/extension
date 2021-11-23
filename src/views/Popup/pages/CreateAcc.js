@@ -11,9 +11,15 @@ import FormGroup from "@mui/material/FormGroup";
 import Button from "@mui/material/Button";
 import "../pages/Cards.css";
 import Header from "../Components/Header";
+import { useHistory } from "react-router";
 const theme = createTheme();
 
 export default function CreateAcc() {
+  const history = useHistory();
+  const CancelBtn = () => {
+    history.push("/createdMask");
+  };
+
   return (
     <Box sx={{ minWidth: 375, height: "100vh" }}>
       <ThemeProvider theme={theme}>
@@ -57,6 +63,7 @@ export default function CreateAcc() {
                   }}
                 >
                   <Button
+                    onClick={CancelBtn}
                     variant="contained"
                     style={{
                       backgroundColor: "transparent",
