@@ -193,9 +193,17 @@ const CreatedMask = () => {
               </Button>
             </li>
             <li className="tab home__tab ">
-              {/* <NavLink exact className="link" to="/Activity"> */}
-              <Button onClick={onActivity}>Activity</Button>
-              {/* </NavLink> */}
+              <NavLink
+                to="/Activity"
+                style={(isActive) => ({
+                  // color: isActive ? "green" : "blue",
+                  textDecoration: "none",
+                })}
+              >
+                <Button className="link" onClick={onActivity}>
+                  Activity
+                </Button>
+              </NavLink>
             </li>
           </ul>
 
