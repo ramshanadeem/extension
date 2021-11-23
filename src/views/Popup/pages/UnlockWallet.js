@@ -10,6 +10,7 @@ import { useHistory } from "react-router";
 import { ethers } from "ethers";
 import ValidateInfo from "./ValidateInfo";
 import useForm from "./useForm";
+import Header from "../Components/Header";
 function UnlockWallet() {
   const { handleSubmit } = useForm(ValidateInfo);
 
@@ -47,7 +48,8 @@ function UnlockWallet() {
 
   return (
     <div style={{ height: "100%" }}>
-      <div
+      <Header />
+      {/* <div
         style={{
           display: "flex",
           flexDirection: "row",
@@ -114,7 +116,7 @@ function UnlockWallet() {
             </MenuItem>
           </Select>
         </div>
-      </div>
+      </div> */}
       <div>
         <img className={classes.imgpara} src={MetaMaskIcon} />
         <br />

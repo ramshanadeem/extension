@@ -196,13 +196,22 @@ const CreatedMask = () => {
               <NavLink
                 to="/Activity"
                 style={(isActive) => ({
-                  // color: isActive ? "green" : "blue",
+                  color: isActive ? "blue" : "gray",
                   textDecoration: "none",
                 })}
+                style={{
+                  fontsize: "1.875rem",
+                  fontWeight: "500",
+                  textDecoration: "none",
+                  color: "gray",
+                  textTransform: "uppercase",
+                  lineHeight: "1.75",
+                  padding: "6px 8px",
+                }}
+                onClick={onActivity}
               >
-                <Button className="link" onClick={onActivity}>
-                  Activity
-                </Button>
+                Activity
+                {/* <Button onClick={onActivity}>Activity</Button> */}
               </NavLink>
             </li>
           </ul>
@@ -254,29 +263,6 @@ const CreatedMask = () => {
             })}
           </div>
         ) : null}
-
-        <div style={{ marginTop: "15%" }}>
-          {/* <p>Transaction history </p> */}
-          {/* {txHistory.map((v, k) => {
-            if (address === v.from) {
-              return <p key={k}>{v.from}</p>;
-            } else {
-              return (
-                <p style={{ fontSize: "12px" }}> you recieved:{v.value}</p>
-              );
-            }
-          })}
-          <p>ETH Transaction history </p>
-          {ERC20History.map((v, k) => {
-            if (address === v.from) {
-              return <p key={k}>you send {v.value}</p>;
-            } else {
-              return (
-                <p style={{ fontSize: "12px" }}> you recieved:{v.value}</p>
-              );
-            }
-          })} */}
-        </div>
 
         <div className="ImpToken">
           <p className="typo">

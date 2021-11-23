@@ -354,7 +354,7 @@ function MaskHeader() {
               </div>
               <div className="account-menu__divider"></div>
 
-              <Link to="/">
+              <Link to="/createAcc">
                 <img
                   style={{ height: "12px", marginRight: "5px" }}
                   src={Btnsvg}
