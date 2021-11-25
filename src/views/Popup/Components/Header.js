@@ -6,7 +6,7 @@ import { MetaMaskIcon } from "../../../Assets";
 function Header() {
   const [network, setNetwork] = useState("rinkeby");
 
-  const ONChange = (event) => {
+  const handleChange = (event) => {
     setNetwork(event.target.value);
   };
 
@@ -31,9 +31,9 @@ function Header() {
           </div>
           <div style={{ marginRight: "10px" }}>
             <Select
-              style={{ right: "60px" }}
+              style={{ right: "80px" }}
               value={network}
-              onChange={ONChange}
+              onChange={handleChange}
             >
               <MenuItem value="homestead">
                 <div className="color-indicator color-indicator--filled color-indicator--border-color-mainnet color-indicator--color-mainnet color-indicator--size-lg"></div>

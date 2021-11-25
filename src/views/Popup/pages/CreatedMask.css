@@ -10,6 +10,16 @@
    color: #4d4d4d;
 }
 
+.styles_btnDefault__3_Glg {
+    background: transparent;
+    border: 0.125em solid #7f8489 !important;
+    color: #7d8287 !important;
+    font-size: 10px !important;
+    /* padding: 0.25em 1em; */
+    border-radius: 0.25em;
+    cursor: pointer;
+    margin-left: 20px !important;
+}
 /* 
 .dropdown{
     margin-top: 15px;

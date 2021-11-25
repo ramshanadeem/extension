@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Link } from "react-router-dom";
 import { ethers } from "ethers";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import {
-  CrytoToUSD,
   decrypt,
   fetchERC20TokenInfo,
   fetchETHBalance,
@@ -14,7 +15,7 @@ import support from "../../../Assets/support.svg";
 import settings from "../../../Assets/settings.svg";
 import "./CreatedMask.css";
 import Buttons from "../Components/Buttons";
-import { NavLink } from "react-router-dom";
+
 import Button from "@mui/material/Button";
 import Popover from "../Components/Popover";
 import MenuItem from "@mui/material/MenuItem";
@@ -408,25 +409,15 @@ function MaskHeader() {
             </div>
             <div class="connected-status-indicator__text">Not connected</div>
           </button>
+
           <Button className={classes.addressBox}>
             Account
             <br />
             {conciseAddress(address)}
-            <div style={{ marginTop: "23px", marginLeft: "2px" }}>
-              <svg
-                width="11"
-                height="11"
-                viewBox="0 0 11 11"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M0 0H1H9V1H1V9H0V0ZM2 2H11V11H2V2ZM3 3H10V10H3V3Z"
-                  fill="#989a9b"
-                ></path>
-              </svg>
+            <div>
+              <CopyToClipboard className={classes.clipboard} text={address}>
+                <ContentCopyIcon />
+              </CopyToClipboard>
             </div>
           </Button>
 
@@ -532,7 +523,7 @@ const useStyles = makeStyles((theme) => ({
     background: "transparent",
 
     "&:hover": {
-      background: "transparent",
+      background: "transparent !important",
     },
     // display: "flex",
     // alignItems: "center",
@@ -588,5 +579,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "0.82rem !important",
     marginLeft: " 100px !important",
     textTransform: "capitalize !important",
+  },
+  clipboard: {
+    marginTop: "130%",
+    height: "0.9rem !important",
+    fontSize: "1.2rem !important",
+    transition: "none !important",
+    marginLeft: "2px",
   },
 }));

@@ -67,6 +67,15 @@ function ConfirmPhrase() {
     })();
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      // let createdNewPhrase = localStorage.setItem(
+      //   "createdNewPhrase",
+      //   createdNewPhrase,
+      //   0
+      // );
+    })();
+  }, []);
   // useEffect(() => {
   //   localStorage.getItem(["data"], async ({ data }) => {
   //     console.log("current data is", data);
@@ -119,6 +128,7 @@ function ConfirmPhrase() {
       console.log("notequal", shuffle);
       setOpen(true);
     }
+    localStorage.setItem("createdNewacc", 0);
   };
 
   const handleClose = () => {

@@ -1,12 +1,11 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from "redux";
 // import thunk from 'redux-thunk';
-import { persistStore, persistReducer, createTransform } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { persistStore, persistReducer, createTransform } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
-
-import rootReducer from './Reducers';
+import rootReducer from "./Reducers";
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
   // whitelist: ['walletEncrypted'],
 };

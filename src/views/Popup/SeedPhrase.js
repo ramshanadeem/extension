@@ -1,6 +1,5 @@
-import { hashMessage } from "@ethersproject/hash";
-import { Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";

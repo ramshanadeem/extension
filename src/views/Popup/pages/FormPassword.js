@@ -57,6 +57,7 @@ export default function SignIn() {
     localStorage.setItem("hashedpassword", hashedpassword);
     console.log("current value is ", hashedpassword);
     console.log("the value is set the password is" + hashedpassword);
+
     // setEncryptedPassword(hashedpassword);
     // let data = localStorage.setItem({ data: encryptPromise }, () => {
     //   console.log("value is set to the data is " + encryptPromise);
