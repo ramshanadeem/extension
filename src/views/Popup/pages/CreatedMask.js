@@ -216,7 +216,7 @@ const CreatedMask = () => {
             </li>
           </ul>
 
-          {isAsset == true ? (
+          {isAsset === true ? (
             <div>
               {customTokens.map((ct) => {
                 <p>
@@ -240,7 +240,7 @@ const CreatedMask = () => {
 
         {/* //  activity
          */}
-        {isAsset == false ? (
+        {isAsset === false ? (
           <div>
             {txHistory.map((v, k) => {
               if (address === v.from) {
