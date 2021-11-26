@@ -197,7 +197,7 @@ ul{
     box-sizing: border-box;
     cursor: pointer;
 }
-/* .color-indicator--color-ui-4 {
+.color-indicator--color-ui-4 {
     border-color: #6a737d;
 }
 .color-indicator {
@@ -226,7 +226,7 @@ ul{
 }
 .connected-status-indicator:hover {
     background-color: #f2f3f4;
-} */
+}
 .connected-status-indicator__text {
     font-size: 0.685rem;
     font-family: Euclid, Roboto, Helvetica, Arial, sans-serif;
@@ -237,6 +237,7 @@ ul{
     margin-left: 2px;
     white-space: nowrap;
 }
+/* yes */
 .metamask{
     margin-top: 5px;
     margin-left: 5px;
@@ -388,7 +389,7 @@ ul{
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    color: gray !important;
+    color: rgb(29, 29, 29) !important;
     font-size: 14px !important;
 }
 /* extension dropdowm */
@@ -511,7 +512,7 @@ ul{
     /* background-color: black !important; */
     border-radius: 4px !important;
     padding: 18px 8px !important;
-    background: rgba(0, 0, 0, 0.8) !important;
+    background: #fff !important;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 2px 2px !important;
     color: rgba(0, 0, 0, 0.87) !important;
     /* -webkit-transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; */
@@ -539,8 +540,8 @@ ul{
 }
 /*click menu list  */
 .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root.Mui-selected {
-    background-color: rgba(25, 118, 210, 0.08);
-    color: #fff;
+    color: rgb(26, 25, 42) !important;
+    background-color: #fff !important;
     
 }
 

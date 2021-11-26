@@ -11,8 +11,7 @@ import NotMatch from "./pages/NotMatch";
 import Recover from "./Recover";
 import SeedPhrase from "./SeedPhrase";
 import Welcome from "./Welcome";
-import Activity from "./pages/Activity";
-import Assets from "./pages/Assets";
+
 import ImportTokens from "./pages/ImportTokens";
 import UnlockWallet from "./pages/UnlockWallet";
 import CreateAcc from "./pages/CreateAcc";
@@ -34,8 +33,8 @@ function App() {
             <Route path="/confirmPhrase" component={ConfirmPhrase} />
             <Route path="/createdMask" component={CreatedMask} />
             <Route path="/notMatch" component={NotMatch} />
-            <Route path="/Activity" component={Activity} />
-            <Route path="/Assets" component={Assets} />
+            {/* <Route path="/Activity" component={Activity} /> */}
+            {/* <Route path="/Assets" component={Assets} /> */}
             <Route path="/Importoken" component={ImportTokens} />
             <Route path="/UnlockWallet" component={UnlockWallet} />
             <Route path="/CreateAcc" component={CreateAcc} />

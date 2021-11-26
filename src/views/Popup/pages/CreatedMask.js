@@ -33,7 +33,7 @@ import { Typography } from "@mui/material";
 import DropDown from "../Components/DropDown";
 import { ETHERSCAN_API_KEY } from "../../../Constant";
 import axios from "axios";
-import MaskHeader from "./MaskHeader";
+import MaskHeader from "../Components/MaskHeader";
 
 export const conciseAddress = (address) => {
   if (Web3.utils.isAddress(address)) {
@@ -177,115 +177,114 @@ const CreatedMask = () => {
   }, [address, network]);
 
   return (
-    // <div style={{ height: "100vh" }}>
-    <Box sx={{ maxHeight: "100vh" }}>
-      <MaskHeader />
-
-      <div>
-        <div style={{ marginTop: "15%" }}>
-          <ul style={{ paddingLeft: "0" }} className="tabs__list home__tabs">
-            <li
-              className="tab home__tab tab--active"
-              data-testid="home__asset-tab"
-            >
-              <Button className="asset" onClick={toAssets}>
-                Assets
-              </Button>
-            </li>
-            <li className="tab home__tab ">
-              <NavLink
-                to="/Activity"
-                style={(isActive) => ({
-                  color: isActive ? "blue" : "gray",
-                  textDecoration: "none",
-                })}
-                style={{
-                  fontsize: "1.875rem",
-                  fontWeight: "500",
-                  textDecoration: "none",
-                  color: "gray",
-                  textTransform: "uppercase",
-                  lineHeight: "1.75",
-                  padding: "6px 8px",
-                }}
-                onClick={onActivity}
+    <div>
+      <Box className="maskHeader">
+        <MaskHeader />
+        <div>
+          <div style={{ marginTop: "15%" }}>
+            <ul style={{ paddingLeft: "0" }} className="tabs__list home__tabs">
+              <li
+                className="tab home__tab tab--active"
+                data-testid="home__asset-tab"
               >
-                Activity
-                {/* <Button onClick={onActivity}>Activity</Button> */}
-              </NavLink>
-            </li>
-          </ul>
-
-          {isAsset === true ? (
-            <div>
-              {customTokens.map((ct) => {
-                <p>
-                  {ct?.balance} {ct.symbol}
-                </p>;
-              })}
-              <div>
-                <Typography
+                <Button className="asset" onClick={toAssets}>
+                  Assets
+                </Button>
+              </li>
+              <li className="tab home__tab ">
+                <NavLink
+                  to="/Activity"
+                  style={(isActive) => ({
+                    color: isActive ? "blue" : "gray",
+                    textDecoration: "none",
+                  })}
                   style={{
-                    marginRight: "50%",
-                    height: "40px",
-                    fontsize: "12px",
+                    fontsize: "1.875rem",
+                    fontWeight: "500",
+                    textDecoration: "none",
+                    color: "gray",
+                    textTransform: "uppercase",
+                    lineHeight: "1.75",
+                    padding: "6px 8px",
                   }}
+                  onClick={onActivity}
                 >
-                  Total Balance in USD:${usd}
-                </Typography>
+                  Activity
+                </NavLink>
+              </li>
+            </ul>
+
+            {isAsset === true ? (
+              <div>
+                {customTokens.map((ct) => {
+                  <p>
+                    {ct?.balance} {ct.symbol}
+                  </p>;
+                })}
+                <div>
+                  <Typography
+                    style={{
+                      marginRight: "50%",
+                      height: "40px",
+                      fontsize: "12px",
+                    }}
+                  >
+                    Total Balance in USD:${usd}
+                  </Typography>
+                </div>
               </div>
+            ) : null}
+          </div>
+
+          {/* //  activity
+           */}
+          {isAsset === false ? (
+            <div>
+              {txHistory.map((v, k) => {
+                if (address === v.from) {
+                  return <p key={k}>{v.from}</p>;
+                } else {
+                  return (
+                    <p style={{ fontSize: "12px" }}> you recieved:{v.value}</p>
+                  );
+                }
+              })}
+
+              {ERC20History.map((v, k) => {
+                if (address === v.from) {
+                  return <p key={k}>you send {v.value}</p>;
+                } else {
+                  return (
+                    <p style={{ fontSize: "12px" }}> you recieved:{v.value}</p>
+                  );
+                }
+              })}
             </div>
           ) : null}
-        </div>
 
-        {/* //  activity
-         */}
-        {isAsset === false ? (
-          <div>
-            {txHistory.map((v, k) => {
-              if (address === v.from) {
-                return <p key={k}>{v.from}</p>;
-              } else {
-                return (
-                  <p style={{ fontSize: "12px" }}> you recieved:{v.value}</p>
-                );
-              }
-            })}
-
-            {ERC20History.map((v, k) => {
-              if (address === v.from) {
-                return <p key={k}>you send {v.value}</p>;
-              } else {
-                return (
-                  <p style={{ fontSize: "12px" }}> you recieved:{v.value}</p>
-                );
-              }
-            })}
+          <div className="ImpToken">
+            <p className="typo">
+              Need help? Contact{" "}
+              <Button style={{ fontVariant: "small-caps" }}>
+                MetaMask Support
+              </Button>
+            </p>
           </div>
-        ) : null}
+          <hr />
 
-        <div className="ImpToken">
-          <p className="typo">
-            Need help? Contact{" "}
-            <Button style={{ fontVariant: "small-caps" }}>
-              MetaMask Support
-            </Button>
-          </p>
+          <div className="ImpToken">
+            <p className="typo"> Don't see your token?</p>
+            <Button onClick={importToken}>Import token</Button>
+            <p className="typo">
+              Need help? Contact{" "}
+              <Button style={{ fontVariant: "small-caps" }}>
+                MetaMask Support
+              </Button>
+            </p>
+          </div>
         </div>
-        <hr />
-
-        <div className="ImpToken">
-          <p className="typo"> Don't see your token?</p>
-          <Button onClick={importToken}>Import token</Button>
-          <p className="typo">
-            Need help? Contact{" "}
-            <Button style={{ fontVariant: "small-caps" }}>
-              MetaMask Support
-            </Button>
-          </p>
-        </div>
-      </div>
-    </Box>
+      </Box>
+    </div>
   );
 };
 export default CreatedMask;
